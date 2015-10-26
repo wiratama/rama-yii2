@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Member;
 use frontend\models\MemberSearch;
+use backend\models\City;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -84,6 +85,17 @@ class MemberController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionGetcity()
+    {
+        $country=(int)Yii::$app->request->post('country');
+        $model = City::findOne($country);
+        $model = City::findAll([
+            'country_id' => $country,
+        ]);
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $model;
     }
 
     protected function findModel($id)
