@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\MemberCategory */
+/* @var $model backend\models\MemberCategory */
 
 $this->title = 'Create Member Category';
 $this->params['breadcrumbs'][] = ['label' => 'Member Categories', 'url' => ['index']];

@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Member;
-use backend\models\MemberSearch;
+use backend\models\Country;
+use backend\models\CountrySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MemberController implements the CRUD actions for Member model.
+ * CountryController implements the CRUD actions for Country model.
  */
-class MemberController extends Controller
+class CountryController extends Controller
 {
     public function behaviors()
     {
@@ -27,12 +27,12 @@ class MemberController extends Controller
     }
 
     /**
-     * Lists all Member models.
+     * Lists all Country models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MemberSearch();
+        $searchModel = new CountrySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,7 +42,7 @@ class MemberController extends Controller
     }
 
     /**
-     * Displays a single Member model.
+     * Displays a single Country model.
      * @param integer $id
      * @return mixed
      */
@@ -54,16 +54,16 @@ class MemberController extends Controller
     }
 
     /**
-     * Creates a new Member model.
+     * Creates a new Country model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Member();
+        $model = new Country();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_member]);
+            return $this->redirect(['view', 'id' => $model->country_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -72,7 +72,7 @@ class MemberController extends Controller
     }
 
     /**
-     * Updates an existing Member model.
+     * Updates an existing Country model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -82,7 +82,7 @@ class MemberController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_member]);
+            return $this->redirect(['view', 'id' => $model->country_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -91,7 +91,7 @@ class MemberController extends Controller
     }
 
     /**
-     * Deletes an existing Member model.
+     * Deletes an existing Country model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,15 +104,15 @@ class MemberController extends Controller
     }
 
     /**
-     * Finds the Member model based on its primary key value.
+     * Finds the Country model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Member the loaded model
+     * @return Country the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Member::findOne($id)) !== null) {
+        if (($model = Country::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

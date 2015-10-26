@@ -1,10 +1,10 @@
 <?php
 
-namespace app\controllers;
+namespace backend\controllers;
 
 use Yii;
-use app\models\MemberOrderProduct;
-use app\models\MemberOrderProductSearch;
+use backend\models\MemberOrderProduct;
+use backend\models\MemberOrderProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\MemberCategory */
+/* @var $model backend\models\MemberCategory */
 
 $this->title = 'Update Member Category: ' . ' ' . $model->id_category;
 $this->params['breadcrumbs'][] = ['label' => 'Member Categories', 'url' => ['index']];

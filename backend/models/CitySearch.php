@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\MemberCategory;
+use backend\models\City;
 
 /**
- * MemberCategorySearch represents the model behind the search form about `backend\models\MemberCategory`.
+ * CitySearch represents the model behind the search form about `backend\models\City`.
  */
-class MemberCategorySearch extends MemberCategory
+class CitySearch extends City
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class MemberCategorySearch extends MemberCategory
     public function rules()
     {
         return [
-            [['id_category'], 'integer'],
-            [['category'], 'safe'],
+            [['zone_id', 'country_id', 'status'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class MemberCategorySearch extends MemberCategory
      */
     public function search($params)
     {
-        $query = MemberCategory::find();
+        $query = City::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,10 +56,12 @@ class MemberCategorySearch extends MemberCategory
         }
 
         $query->andFilterWhere([
-            'id_category' => $this->id_category,
+            'zone_id' => $this->zone_id,
+            'country_id' => $this->country_id,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'category', $this->category]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

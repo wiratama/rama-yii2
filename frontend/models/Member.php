@@ -61,9 +61,9 @@ class Member extends \yii\db\ActiveRecord
     {
         return [
             'id_member' => 'Id Member',
-            'id_member_category' => 'Id Member Category',
+            'id_member_category' => 'Member Type',
             'name' => 'Name',
-            'phone' => 'Phone',
+            'phone' => 'Phone Number',
             'gender' => 'Gender',
             'dob' => 'Dob',
             'address' => 'Address',

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\MemberSearch */
+/* @var $searchModel backend\models\MemberSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Members';
@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'city',
             // 'country',
             // 'password',
+            // 'auth_key',
             // 'email:email',
             // 'password_reset_token',
             // 'status',

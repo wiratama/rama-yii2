@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\MemberSearch */
+/* @var $model backend\models\MemberSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -34,6 +34,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'country') ?>
 
     <?php // echo $form->field($model, 'password') ?>
+
+    <?php // echo $form->field($model, 'auth_key') ?>
 
     <?php // echo $form->field($model, 'email') ?>
 

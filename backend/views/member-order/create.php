@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\MemberOrder */
+/* @var $model backend\models\MemberOrder */
 
 $this->title = 'Create Member Order';
 $this->params['breadcrumbs'][] = ['label' => 'Member Orders', 'url' => ['index']];

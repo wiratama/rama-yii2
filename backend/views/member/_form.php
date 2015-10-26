@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Member */
+/* @var $model backend\models\Member */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -29,6 +29,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'country')->textInput() ?>
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 

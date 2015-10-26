@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Member */
+/* @var $model backend\models\Member */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Members', 'url' => ['index']];
@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'city',
             'country',
             'password',
+            'auth_key',
             'email:email',
             'password_reset_token',
             'status',

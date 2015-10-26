@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -14,8 +14,8 @@ use Yii;
  * @property integer $price
  * @property integer $total
  *
- * @property Product $idProduct
  * @property MemberOrder $idOrder
+ * @property Product $idProduct
  */
 class MemberOrderProduct extends \yii\db\ActiveRecord
 {
@@ -56,16 +56,16 @@ class MemberOrderProduct extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdProduct()
+    public function getIdOrder()
     {
-        return $this->hasOne(Product::className(), ['id_product' => 'id_product']);
+        return $this->hasOne(MemberOrder::className(), ['id_order' => 'id_order']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdOrder()
+    public function getIdProduct()
     {
-        return $this->hasOne(MemberOrder::className(), ['id_order' => 'id_order']);
+        return $this->hasOne(Product::className(), ['id_product' => 'id_product']);
     }
 }

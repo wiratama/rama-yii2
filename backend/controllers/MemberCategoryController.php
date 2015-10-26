@@ -1,10 +1,10 @@
 <?php
 
-namespace app\controllers;
+namespace backend\controllers;
 
 use Yii;
-use app\models\MemberCategory;
-use app\models\MemberCategorySearch;
+use backend\models\MemberCategory;
+use backend\models\MemberCategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

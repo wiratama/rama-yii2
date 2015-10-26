@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -17,6 +17,7 @@ use Yii;
  * @property integer $city
  * @property integer $country
  * @property string $password
+ * @property string $auth_key
  * @property string $email
  * @property string $password_reset_token
  * @property integer $status
@@ -43,12 +44,13 @@ class Member extends \yii\db\ActiveRecord
     {
         return [
             [['id_member_category', 'city', 'country', 'status'], 'integer'],
-            [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'password', 'email', 'status', 'created_at', 'updated_at'], 'required'],
+            [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'password', 'auth_key', 'email', 'status', 'created_at', 'updated_at'], 'required'],
             [['dob', 'created_at', 'updated_at'], 'safe'],
             [['address'], 'string'],
             [['name', 'password', 'password_reset_token'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 15],
-            [['gender', 'email'], 'string', 'max' => 50]
+            [['gender', 'email'], 'string', 'max' => 50],
+            [['auth_key'], 'string', 'max' => 32]
         ];
     }
 
@@ -68,6 +70,7 @@ class Member extends \yii\db\ActiveRecord
             'city' => 'City',
             'country' => 'Country',
             'password' => 'Password',
+            'auth_key' => 'Auth Key',
             'email' => 'Email',
             'password_reset_token' => 'Password Reset Token',
             'status' => 'Status',
