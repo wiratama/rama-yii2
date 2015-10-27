@@ -58,7 +58,11 @@ class MemberController extends Controller
     {
         $model = new Member();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_member]);
+            \Yii::$app->getSession()->setFlash('success', 'Thank you for signup. Administrator will approve your account.');
+            $model = new Member();
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         } else {
             return $this->render('create', [
                 'model' => $model,

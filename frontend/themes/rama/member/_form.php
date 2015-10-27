@@ -129,8 +129,29 @@ use kartik\password\PasswordInput;
     <?php ActiveForm::end(); ?>
 </div>
 <?php
+$null='';
 use yii\web\View;
 $this->registerJs("
+$(document).ready(function() {
+    var country = $('#member-country').val();
+    if (country!='') {
+       $.ajax({
+        url: '".Yii::$app->urlManager->createAbsoluteUrl('member/getcity')."',
+        type: 'post',
+        data: 'country=' + country,
+        dataType: 'json',
+        success: function(json) {
+            html = '<option value=".$null.">Select...</option>';
+            if (json && json!= '') {
+                for (i = 0; i < json.length; i++) {
+                    html += '<option value=' + json[i]['zone_id'] + '>' + json[i]['name'] + '</option>';
+                }
+            }
+            $('select#member-city').html(html);
+        },
+    }); 
+    }
+});
 $('#member-country').on('change', function() {    
     var country = $('#member-country').val();
     $.ajax({
@@ -139,7 +160,7 @@ $('#member-country').on('change', function() {
         data: 'country=' + country,
         dataType: 'json',
         success: function(json) {
-            html = '<option>Select...</option>';
+            html = '<option value=".$null.">Select...</option>';
             if (json && json!= '') {
                 for (i = 0; i < json.length; i++) {
                     html += '<option value=' + json[i]['zone_id'] + '>' + json[i]['name'] + '</option>';

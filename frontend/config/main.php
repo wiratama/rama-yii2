@@ -13,7 +13,7 @@ return [
 	'controllerNamespace' => 'frontend\controllers',
 	'components' => [
 		'user' => [
-			'identityClass' => 'common\models\User',
+			'identityClass' => 'frontend\models\Member',
 			'enableAutoLogin' => true,
 			// newadded
 			'identityCookie' => [
@@ -38,20 +38,20 @@ return [
 		'urlManager' => [
 			'class' => 'yii\web\UrlManager',
 			'enablePrettyUrl' => true,
-			'showScriptName' => false,
+			'showScriptName' => true,
 			'enableStrictParsing' => false, //‘enableStrictParsing’ => true, tells Yii2 to allow only the routes that are listed in the rules.
-			'rules' => [
-				'/' => 'site/index',
-				'about' => 'site/about',
-				'contact' => 'site/contact',
-				'login' => 'site/login',
-				'logout' => 'site/logout',
-				'captcha' => 'site/captcha',
-				// 'signup' => 'site/signup',
-				'signup' => 'member/signup',
-				'request-password-reset' => 'site/request-password-reset',
-				'reset-password' => 'site/reset-password',
-			],
+			// 'rules' => [
+			// 	'/' => 'site/index',
+			// 	'about' => 'site/about',
+			// 	'contact' => 'site/contact',
+			// 	'login' => 'site/login',
+			// 	'logout' => 'site/logout',
+			// 	'captcha' => 'site/captcha',
+			// 	// 'signup' => 'site/signup',
+			// 	'signup' => 'member/signup',
+			// 	'request-password-reset' => 'site/request-password-reset',
+			// 	'reset-password' => 'site/reset-password',
+			// ],
 		],
 		'urlManagerBackend' => [
 			'class' => 'yii\web\UrlManager',
