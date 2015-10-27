@@ -1,0 +1,125 @@
+body{background-color: #eceae7;}
+.logo{position: absolute;z-index: 9999;}
+.bg-darkpink{background-color: #4f1d35;color: #fff;}
+.link a{color: #ffffff !important;}
+.link a:hover{color: #e6c506 !important;text-decoration: none;}
+.header{padding:10px 15px 10px 15px;}
+.bg-pink{background-color: #78244d;color:#ffffff;}
+.navigation{margin-bottom: 0;background-color: transparent;border-color: transparent;border:0;}
+.divider-left{border-left: 1px solid #fff;}
+#grandistanaramamenu li a:hover{background-color: #4F1D35;}
+.glyphicon img{position: relative;top: 180px;bottom: 180px; height: 100px;line-height: 100px;}
+.box-shadow{-webkit-box-shadow: 0 8px 6px -6px black;-moz-box-shadow: 0 8px 6px -6px black;box-shadow: 0 8px 20px -6px black;}
+.box-black{background-color: #202020;color: #ffffff;}
+.full{width: 100%;}
+.no-padding{padding: 0;}
+.no-margin-row{margin-left: 0;margin-right: 0;}
+.logo-content{padding-top: 20px;padding-bottom: 20px;}
+.btn-reserve{margin-top: 30px;margin-bottom: 15px;}
+.content{margin-top: 35px;margin-bottom: 35px;}
+.content-home{margin-top: 5px;margin-bottom: 5px;}
+.text-yellow{color: #e6c406;}
+.socmed{text-align: center;padding-bottom: 15px;padding-top: 5px;}
+.socmed img{padding: 0 10px 0 10px;}
+.footer{padding-top: 15px;padding-bottom: 15px;}
+.line{margin-top: 10px;margin-bottom: 10px;}
+.bottom-menu{text-align: center;padding-top: 15px;padding-bottom: 15px;}
+.bottom-menu a{color: #ffffff;text-decoration: none;}
+.bottom-menu a:hover{color: #e6c406;text-decoration: none;}
+.icon-aboutus{padding: 30px 0 30px 0;}
+.space-text{padding: 25px 0 25px 0;}
+.member-line{border-color: #955674;color: #955674;width: 58px;margin-left: 0;margin-top: 0;border: 3px solid;}
+.no-margin-bottom{margin-bottom: 0px;}
+.btn-pink{background-color: #78244d;color: #ffffff;padding-left: 25px;padding-right: 25px;}
+.btn-pink:hover{background-color: #9d2761;color: #ffffff;}
+.btn-pink:after{background-color: #9d2761;color: #ffffff;}
+.captcha{padding-top: 0px;}
+.form-contact{padding-left: 100px;padding-right: 100px;}
+.benefit-line{background-color: #78244d;padding-top: 10px;padding-bottom: 10px;color: #fff;}
+.select-history{width: 20%;margin: 0 auto;}
+.more-space{margin-top: 25px;margin-bottom: 25px;}
+.bg-yellow{background: #e5c406;}
+.point1{padding: 65px;}
+.point2{padding: 92px;}
+.point-value{font-size: 50px;}
+.point-info{font-size: 18px;}
+.img-promo{border-radius: 140px;width: 280px;height: 280px;}
+.sticky-foot{padding: 8px;}
+.bg-white{background-color: #ffffff;color: #000000;)}
+hr.menu-divider{display: none;}
+.content ul li {list-style-type: square;}
+.about-img{padding: 15px 0 0 0;}
+.table-point{width: 80%;margin: 0 auto;}
+.bg-white{background-color: #fff;}
+.history-point{margin-left: 15px;margin-right: 15px;padding-bottom: 50px;}
+.history-title{padding-top: 25px;}
+.form-member-profile{padding-left: 100px;padding-right: 100px;}
+hr.history{margin-top: 20px;margin-bottom:0px;border: 0;border-top: 1px solid #6B6A69;}
+.maps{width: 100%; height: 500px;}
+li.navigation-divider{padding: 13px 0px 13px 0px;}
+
+/*Caraousel Fade*/
+.carousel-fade .carousel-inner .item {opacity: 0;transition-property: opacity;transition-duration: 3s;transition-timing-function:linear;}
+.carousel-fade .carousel-inner .active {opacity: 1;}
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {left: 0;opacity: 0;z-index: 1;}
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {opacity: 1;}
+.carousel-fade .carousel-control {z-index: 2;}
+@media all and (transform-3d), (-webkit-transform-3d) {
+    .carousel-fade .carousel-inner > .item.next,
+    .carousel-fade .carousel-inner > .item.active.right {opacity: 0;-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}
+    .carousel-fade .carousel-inner > .item.prev,
+    .carousel-fade .carousel-inner > .item.active.left {opacity: 0;-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}
+    .carousel-fade .carousel-inner > .item.next.left,
+    .carousel-fade .carousel-inner > .item.prev.right,
+    .carousel-fade .carousel-inner > .item.active {opacity: 1;-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}
+}
+/*End Caraousel Fade*/
+@media( max-width: 1024px){
+	.glyphicon img{top: 140px;bottom: 140px;height: 80px;line-height: 80px;}
+	.header{padding-right: 15px;padding-left: 15px;}
+	.logo-content{padding-bottom: 0px;}
+	.content-home h2{margin-top: 0px;font-size: 22px;}
+}
+@media( max-width: 800px){
+	#grandistanaramamenu ul li a{font-size: 12px;}
+	.glyphicon img{top: 120px;bottom: 120px;height: 60px;line-height: 60px;}
+	.point2{padding: 90px 15px 92px 15px;}
+	.img-promo{border-radius: 90px;width: 180px;height: 180px;}
+}
+@media( max-width: 768px){
+	.glyphicon img {top: 110px;bottom: 110px;height: 40px;line-height: 40px;}
+	.point2{padding: 92px 15px 92px 15px;}
+}
+@media( max-width: 600px){
+	.header{padding-right: 15px;padding-left: 15px;}
+	.logo{position: relative;margin: 0 auto;}
+	.header{background-color: #46112A;}
+	.divider-left{border: 0;}
+	#grandistanaramamenu ul li a{text-align: center;}
+	hr.menu-divider {border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0),rgba(0, 0, 0, 0), rgba(230, 196, 6, 1), rgba(0, 0, 0, 0),rgba(0, 0, 0, 0));display: block;margin: 0;}
+	.glyphicon img {top: 80px;bottom: 80px;height: 50px;line-height: 50px;}
+	.form-contact{padding-left: 15px;padding-right: 15px;}
+	.btn-pink{margin-top: 15px;}
+	.point1{padding: 65px 15px 65px 15px;}
+	.point-info{font-size: 17px;}
+	li.navigation-divider{display: none !important;}
+}
+@media( max-width: 568px){
+	.glyphicon img {top: 40px;bottom: 40px;height: 40px;line-height: 40px;}
+	.no-info-padding{padding: 0;}
+}
+@media( max-width: 480px){
+	.glyphicon img {top: 60px;bottom: 60px;height: 40px;line-height: 40px;}
+}
+@media( max-width: 320px){
+	hr.menu-divider{background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(230, 196, 6, 1),rgba(0, 0, 0, 0));}
+	.glyphicon img {top: 45px;bottom: 45px;height: 30px;line-height: 30px;}
+	.icon-aboutus img{width: 60px;}
+	.full-col-xs{width: 100%;}
+	.point-space{margin-top: 15px;}
+	.form-member-profile{padding-left: 15px;padding-right: 15px;}
+	.form-group button{margin: 0 auto;display: block;}
+	a.btn-pink{margin: 0 auto;display: block;}
+}

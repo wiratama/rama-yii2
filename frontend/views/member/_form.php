@@ -14,7 +14,12 @@ use yii\helpers\Url;
 
 <div class="member-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php 
+    $form = ActiveForm::begin([
+        'options' => [
+            'class' => 'form-horizontal'
+        ]
+    ]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
@@ -38,6 +43,12 @@ use yii\helpers\Url;
     ?>
     <?= $form->field($model, 'city')->dropDownList([], ['prompt'=>'Select...']) ?>
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
+    <?= \himiklab\yii2\recaptcha\ReCaptcha::widget([
+        'name' => 'reCaptcha',
+        'siteKey' => '6Ld-mg8TAAAAAJPK3iJl1LYo8-Z6l7WSo82cTQPU',
+        'widgetOptions' => ['class' => 'form-group']
+    ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

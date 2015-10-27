@@ -57,7 +57,6 @@ class MemberController extends Controller
     public function actionSignup()
     {
         $model = new Member();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_member]);
         } else {

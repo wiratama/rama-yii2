@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use kartik\password\StrengthValidator;
 
 /**
  * This is the model class for table "member".
@@ -29,6 +30,8 @@ use Yii;
  */
 class Member extends \yii\db\ActiveRecord
 {
+    public $password_repeat;
+    public $reCaptcha;
     /**
      * @inheritdoc
      */
@@ -43,14 +46,22 @@ class Member extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_member_category', 'city', 'country', 'status'], 'integer'],
+            // [['id_member_category', 'city', 'country', 'status'], 'integer'],
+            [['id_member_category', 'status'], 'integer'],
             [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'password', 'auth_key', 'email', 'status', 'created_at', 'updated_at'], 'required'],
             [['dob', 'created_at', 'updated_at'], 'safe'],
             [['address'], 'string'],
             [['name', 'password', 'password_reset_token'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 15],
             [['gender', 'email'], 'string', 'max' => 50],
-            [['auth_key'], 'string', 'max' => 32]
+            [['auth_key'], 'string', 'max' => 32],
+            [['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6Ld-mg8TAAAAAAQaHcZh-UPIbyHrbSSljOACOSqN'],
+            [['email'],'unique'],
+            // ['email', 'unique', 'targetClass' => '\common\models\Member', 'message' => 'This email address has already been taken.'],
+            [['email'],'email'],
+            ['password_repeat', 'required'],
+            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
+            [['password'], StrengthValidator::className(), 'preset'=>'normal', 'userAttribute'=>'username'],
         ];
     }
 
@@ -70,6 +81,7 @@ class Member extends \yii\db\ActiveRecord
             'city' => 'City',
             'country' => 'Country',
             'password' => 'Password',
+            'password_repeat' => 'Repeat password',
             'auth_key' => 'Auth Key',
             'email' => 'Email',
             'password_reset_token' => 'Password reset token',
