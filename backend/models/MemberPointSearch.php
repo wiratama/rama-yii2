@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Product;
+use backend\models\MemberPoint;
 
 /**
- * ProductSearch represents the model behind the search form about `backend\models\Product`.
+ * MemberPointSearch represents the model behind the search form about `backend\models\MemberPoint`.
  */
-class ProductSearch extends Product
+class MemberPointSearch extends MemberPoint
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id_product', 'price'], 'integer'],
-            [['name', 'description'], 'safe'],
+            [['id_member_point', 'point', 'status'], 'integer'],
+            [['id_member', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ProductSearch extends Product
      */
     public function search($params)
     {
-        $query = Product::find();
+        $query = MemberPoint::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,13 +55,18 @@ class ProductSearch extends Product
             return $dataProvider;
         }
 
+        $query->joinWith('idMember');
+
         $query->andFilterWhere([
-            'id_product' => $this->id_product,
-            'price' => $this->price,
+            'id_member_point' => $this->id_member_point,
+            // 'id_member' => $this->id_member,
+            // 'member_point.created_at' => $this->created_at,
+            // 'member_point.updated_at' => $this->updated_at,
+            'point' => $this->point,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'member.name', $this->id_member]);
 
         return $dataProvider;
     }

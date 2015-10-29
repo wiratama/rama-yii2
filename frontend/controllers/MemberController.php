@@ -3,17 +3,34 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Member;
-use frontend\models\MemberSearch;
 use backend\models\City;
+use backend\models\MemberPoint;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 class MemberController extends Controller
 {
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                // 'only' => ['signup','myaccount','update','point'],
+                'rules' => [
+                    [
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['myaccount','update','point'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -36,27 +53,18 @@ class MemberController extends Controller
         ];
     }
 
-    public function actionIndex()
+    public function actionMyaccount()
     {
-        $searchModel = new MemberSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    public function actionView($id)
-    {
+        $member=Member::findIdentity(Yii::$app->user->identity->id);
+        $member->password="Your choosen password!";
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $member,
         ]);
     }
 
     public function actionSignup()
     {
-        $model = new Member();
+        $model = new Member(['scenario' => 'signup']);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             \Yii::$app->getSession()->setFlash('success', 'Thank you for signup. Administrator will approve your account.');
             $model = new Member();
@@ -70,24 +78,45 @@ class MemberController extends Controller
         }
     }
 
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_member]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $model=Member::findIdentity(Yii::$app->user->identity->id);
+        $oldpassword=$model->password;
+        $model->password='';
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $post_member=Yii::$app->request->post('Member');
+            if(empty($post_member['password'])) {
+                $model->password=$oldpassword;
+            }
+            if ($model->save()) {
+                return $this->redirect(['myaccount']);
+            }
         }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
-    public function actionDelete($id)
+    public function actionPoint()
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $points=MemberPoint::find()->where(['id_member' => Yii::$app->user->identity->id])->all();
+        $points_active=MemberPoint::find()->where(['id_member' => Yii::$app->user->identity->id,'status'=>1])->all();
+        $points_used=MemberPoint::find()->where(['id_member' => Yii::$app->user->identity->id,'status'=>2])->all();
+        $active = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=1");
+        $active_point = $active->queryScalar();
+        $used = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=2");
+        $used_point = $used->queryScalar();
+        $total = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point");
+        $total_point = $total->queryScalar();
+        return $this->render('point', [
+            'points' => $points,
+            'points_active' => $points_active,
+            'points_used' => $points_used,
+            'active_point' => $active_point,
+            'used_point' => $used_point,
+            'total_point' => $total_point,
+        ]);
     }
 
     public function actionGetcity()

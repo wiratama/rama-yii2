@@ -42,7 +42,7 @@ class City extends \yii\db\ActiveRecord
         return [
             'zone_id' => 'Zone ID',
             'country_id' => 'Country ID',
-            'name' => 'Name',
+            'name' => 'Region',
             'status' => 'Status',
         ];
     }

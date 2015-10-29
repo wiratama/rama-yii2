@@ -123,3 +123,15 @@ li.navigation-divider{padding: 13px 0px 13px 0px;}
 	.form-group button{margin: 0 auto;display: block;}
 	a.btn-pink{margin: 0 auto;display: block;}
 }
+.dropdown-nav {
+    background-color: #4f1d35;
+    border: none;
+    top: 28px;
+    padding: 0px;
+}
+.dropdown-nav>li>a {
+	padding: 10px 20px;
+}
+.dropdown-nav>li>a:hover {
+	background-color: #78244d;
+}

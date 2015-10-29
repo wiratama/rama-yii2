@@ -8,15 +8,24 @@ use backend\models\MemberSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use backend\models\City;
 
-/**
- * MemberController implements the CRUD actions for Member model.
- */
 class MemberController extends Controller
 {
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index','view','create','update','delete','getcity'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -26,10 +35,6 @@ class MemberController extends Controller
         ];
     }
 
-    /**
-     * Lists all Member models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new MemberSearch();
@@ -41,11 +46,6 @@ class MemberController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Member model.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -53,14 +53,9 @@ class MemberController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Member model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
-        $model = new Member();
+        $model = new Member(['scenario' => 'register']);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_member]);
@@ -71,31 +66,40 @@ class MemberController extends Controller
         }
     }
 
-    /**
-     * Updates an existing Member model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldpassword=$model->password;
+        $model->password='';
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_member]);
+        if ($model->load(Yii::$app->request->post())) {
+            $post_member=Yii::$app->request->post('Member');
+            if(empty($post_member['password'])) {
+                $model->password=$oldpassword;
+            }
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id_member]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
+
+        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //     return $this->redirect(['view', 'id' => $model->id_member]);
+        // } else {
+        //     return $this->render('update', [
+        //         'model' => $model,
+        //     ]);
+        // }
     }
 
-    /**
-     * Deletes an existing Member model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -103,13 +107,6 @@ class MemberController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Member model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Member the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Member::findOne($id)) !== null) {
@@ -117,5 +114,16 @@ class MemberController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionGetcity()
+    {
+        $country=(int)Yii::$app->request->post('country');
+        $model = City::findOne($country);
+        $model = City::findAll([
+            'country_id' => $country,
+        ]);
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $model;
     }
 }

@@ -15,10 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="header-content text-center">
 			<h1>MEMBER SIGNUP</h1>
 			<div class="icon-aboutus">
-				<a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/iconroom.png"></a>
-				<a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/iconrestaurant.png"></a>
-				<a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/iconbar.png"></a>
-				<a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/iconpool.png"></a>
+				<a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconroom.png"></a>
+				<a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconrestaurant.png"></a>
+				<a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconbar.png"></a>
+				<a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconpool.png"></a>
 			</div>
 		</div>
 	</div>

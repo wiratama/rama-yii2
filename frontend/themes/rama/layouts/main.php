@@ -31,12 +31,28 @@ AppAsset::register($this);
 			<div class="row bg-darkpink">
 				<div class="container">
 					<div class="row">
-						<div class="col-md-4 col-sm-4 col-xs-12 pull-left"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/logo.png" class="img-responsive logo"></div>
+						<div class="col-md-4 col-sm-4 col-xs-12 pull-left"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/logo.png" class="img-responsive logo"></div>
 						<div class="col-md-8 col-sm-8 col-xs-12 text-right link header">
 							<span>
-								<a href="<?=Yii::$app->urlManager->createAbsoluteUrl('member/signup'); ?>">SIGN UP</a>
+							<?php if (Yii::$app->user->isGuest) { ?>
+								<a href="<?=Yii::$app->urlManager->createAbsoluteUrl('member/signup'); ?>" data-method="post">SIGN UP</a>
 								</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span>
 								<a href="<?=Yii::$app->urlManager->createAbsoluteUrl('site/login'); ?>">LOGIN</a>
+							<?php } else { ?>
+								<a href="<?=Yii::$app->urlManager->createAbsoluteUrl('member/myaccount'); ?>" data-method="post">MY ACCOUNT</a>
+								</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span>
+								<a href="<?=Yii::$app->urlManager->createAbsoluteUrl('site/logout'); ?>" data-method="post">LOGOUT</a>
+								<?php /*
+								</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span>
+								<div class="dropdown pull-right">
+							        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown <b class="caret"></b></a>
+							        <ul class="dropdown-menu dropdown-nav">
+							            <li><a href="#">Action</a></li>
+							            <li><a href="#">Another action</a></li>
+							        </ul>
+							    </div>
+							    */ ?>
+							<?php } ?>
 							</span>
 						</div>
 					</div>
@@ -77,27 +93,27 @@ AppAsset::register($this);
 				<div id="grandistanaramabanner" class="carousel slide carousel-fade" data-ride="carousel" data-interval="10000">
 					<div class="carousel-inner" role="listbox">
 						<div class="item active">
-							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/banner1.jpg" alt="">
+							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/banner1.jpg" alt="">
 						</div>
 						<div class="item">
-							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/banner2.jpg" alt="">
+							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/banner2.jpg" alt="">
 						</div>
 						<div class="item">
-							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/banner3.jpg" alt="">
+							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/banner3.jpg" alt="">
 						</div>
 						<div class="item">
-							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/banner4.jpg" alt="">
+							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/banner4.jpg" alt="">
 						</div>
 						<div class="item">
-							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/banner5.jpg" alt="">
+							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/banner5.jpg" alt="">
 						</div>
 					</div>
 					<a class="left carousel-control" href="#grandistanaramabanner" role="button" data-slide="prev">
-						<span class="glyphicon" aria-hidden="true"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/previous.png" class="img-responsive"></span>
+						<span class="glyphicon" aria-hidden="true"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/previous.png" class="img-responsive"></span>
 						<span class="sr-only">Previous</span>
 					</a>
 					<a class="right carousel-control" href="#grandistanaramabanner" role="button" data-slide="next">
-						<span class="glyphicon" aria-hidden="true"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/next.png" class="img-responsive"></span>
+						<span class="glyphicon" aria-hidden="true"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/next.png" class="img-responsive"></span>
 						<span class="sr-only">Next</span>
 					</a>
 				</div>
@@ -113,13 +129,13 @@ AppAsset::register($this);
 					<div class="row footer">
 						<div class="col-md-12">
 							<div class="socmed">
-								<a href=""><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/fb.png"></a>
-								<a href=""><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/tw.png"></a>
-								<a href=""><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/ta.png"></a>
+								<a href=""><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/fb.png"></a>
+								<a href=""><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/tw.png"></a>
+								<a href=""><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/ta.png"></a>
 							</div>
 						</div>
 						<div class="col-md-12 line">
-							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>images/hrwhite.png" class="full center-block">
+							<img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/hrwhite.png" class="full center-block">
 						</div>
 						<div class="col-md-12">
 							<div class="bottom-menu">
@@ -139,8 +155,6 @@ AppAsset::register($this);
 				</div>
 			</div>
 		</div>
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
 	<?php $this->endBody() ?>
 	</body>
 </html>

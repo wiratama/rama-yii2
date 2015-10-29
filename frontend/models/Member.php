@@ -9,6 +9,8 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\base\Event;
+use backend\models\Country;
+use backend\models\City;
 
 /**
  * This is the model class for table "member".
@@ -56,7 +58,7 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             // [['id_member_category', 'city', 'country', 'status'], 'integer'],
             [['id_member_category', 'status'], 'integer'],
-            [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'password', 'auth_key', 'email', 'created_at', 'updated_at'], 'required'],
+            [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'auth_key', 'email', 'created_at', 'updated_at'], 'required'],
             [['dob', 'created_at', 'updated_at'], 'safe'],
             [['address'], 'string'],
             [['name', 'password', 'password_reset_token'], 'string', 'max' => 255],
@@ -64,10 +66,10 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
             [['gender', 'email'], 'string', 'max' => 50],
             [['auth_key'], 'string', 'max' => 32],
             [['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6Ld-mg8TAAAAAAQaHcZh-UPIbyHrbSSljOACOSqN'],
-            [['email'],'unique'],
-            // ['email', 'unique', 'targetClass' => '\common\models\Member', 'message' => 'This email address has already been taken.'],
+            // [['email'],'unique'],
+            ['email', 'unique', 'targetClass' => '\frontend\models\Member', 'message' => 'This email address has already been taken.'],
             [['email'],'email'],
-            ['password_repeat', 'required'],
+            [['password_repeat', 'password'], 'required', 'on' => 'signup'],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
             [['password'], StrengthValidator::className(), 'preset'=>'normal', 'userAttribute'=>'email'],
             ['status', 'default', 'value' => self::STATUS_PENDING],
@@ -88,7 +90,7 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
             'gender' => 'Gender',
             'dob' => 'Date of birth',
             'address' => 'Address',
-            'city' => 'City',
+            'city' => 'Region',
             'country' => 'Country',
             'password' => 'Password',
             'password_repeat' => 'Repeat password',
@@ -101,20 +103,24 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getIdMemberCategory()
     {
         return $this->hasOne(MemberCategory::className(), ['id_category' => 'id_member_category']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getMemberOrders()
     {
         return $this->hasMany(MemberOrder::className(), ['id_member' => 'id_member']);
+    }
+
+    public function getCountries()
+    {
+        return $this->hasOne(Country::className(), ['country_id' => 'country']);
+    }
+
+    public function getCities()
+    {
+        return $this->hasOne(City::className(), ['zone_id' => 'city']);
     }
 
     // newadded
@@ -191,6 +197,11 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
+    public function setPassword($password)
+    {
+        $this->password = Yii::$app->security->generatePasswordHash($password);
+    }
+
     public function beforeValidate()
     {
         if (parent::beforeValidate()) {
@@ -207,8 +218,9 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     public function beforeSave($insert) {
-        if(isset($this->password)) { 
-            $this->password=Yii::$app->security->generatePasswordHash($this->password);
+        if(isset($this->password) and !empty($this->password_repeat)) {
+            // $this->password=Yii::$app->security->generatePasswordHash($this->password);
+            $this->setPassword($this->password);
         }
         return parent::beforeSave($insert);
     }

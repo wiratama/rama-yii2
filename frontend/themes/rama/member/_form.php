@@ -144,7 +144,11 @@ $(document).ready(function() {
             html = '<option value=".$null.">Select...</option>';
             if (json && json!= '') {
                 for (i = 0; i < json.length; i++) {
-                    html += '<option value=' + json[i]['zone_id'] + '>' + json[i]['name'] + '</option>';
+                    html += '<option value=' + json[i]['zone_id'];
+                    if (json[i]['zone_id'] == '".$model->city."') {
+                        html += ' selected=selected';
+                    }
+                    html += '>' + json[i]['name'] + '</option>';
                 }
             }
             $('select#member-city').html(html);

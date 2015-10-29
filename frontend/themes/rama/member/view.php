@@ -10,41 +10,45 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Members', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="member-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_member], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_member], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+<div class="row">
+    <div class="col-md-12">
+        <div class="header-content text-center">
+            <h1>MEMBER PROFILE</h1>
+            <div class="icon-aboutus">
+                <a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconroom.png"></a>
+                <a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconrestaurant.png"></a>
+                <a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconbar.png"></a>
+                <a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconpool.png"></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 text-center">
+        <div class="benefit-line">
+            <span class="link"><a href="">PROMO</a>
+            </span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="link"><a href="<?=Yii::$app->urlManager->createAbsoluteUrl('member/point'); ?>">MY POINT</a></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 form-member-profile">
+        <h2 class="text-center"><?= Html::encode($this->title) ?></h2>
+        <p>
+            <?= Html::a('Update', ['update'], ['class' => 'btn btn-primary']) ?>
+        </p>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'name',
+                'dob',
+                'gender',
+                'phone',
+                'email:email',
+                'address:ntext',
+                'countries.name',
+                'cities.name',
+                'password',
             ],
         ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id_member',
-            'id_member_category',
-            'name',
-            'phone',
-            'gender',
-            'dob',
-            'address:ntext',
-            'city',
-            'country',
-            'password',
-            'auth_key',
-            'email:email',
-            'password_reset_token',
-            'status',
-            'created_at',
-            'updated_at',
-        ],
-    ]) ?>
-
+    </div>
 </div>
