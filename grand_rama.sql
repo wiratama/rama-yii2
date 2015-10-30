@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2015 at 05:03 AM
+-- Generation Time: Oct 30, 2015 at 08:43 AM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -4441,7 +4441,16 @@ CREATE TABLE IF NOT EXISTS `member` (
   `updated_at` date NOT NULL,
   PRIMARY KEY (`id_member`),
   KEY `id_member_category` (`id_member_category`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `member`
+--
+
+INSERT INTO `member` (`id_member`, `id_member_category`, `name`, `phone`, `gender`, `dob`, `address`, `city`, `country`, `password`, `auth_key`, `email`, `password_reset_token`, `status`, `created_at`, `updated_at`) VALUES
+(4, NULL, 'arya wiratama', '123456789', 'Male', '2015-10-01', 'Puri Chandra Asri A 25', 1508, 100, '$2y$13$r8TyoyRpccl084Vw8fTXMud15lCSOFHHlN9o432kA7cA.7caCmGnO', 'N_zaWzpqtpK_J3PiXt-R8RtqLKmdhqFj', 'arya@alamaya.com', NULL, 2, '2015-10-27', '2015-10-29'),
+(5, NULL, 'arya alamaya', '123456789', 'Male', '2015-10-01', 'PCA A 25', 1508, 100, '$2y$13$8vA1PyWuPRA67zWMo.rlou/MPj3vcsv29I9uZiO2Y8bYWxzRwXsBm', 'N_zaWzpqtpK_J3PiXt-R8RtqLKmdhqFj', 'arya2@alamaya.com', NULL, 2, '2015-10-28', '2015-10-28'),
+(6, NULL, 'arya alamaya3', '123456789', 'Male', '2015-10-01', 'PCA A25', 1508, 100, '$2y$13$q2R2g8c8EdnngSrIIRB3XOYKLmd48nBn7jMayUK2M5JjmHBe.csPm', 'v9217Os_6-QFenOWcd9IE_c7NO14rEXn', 'arya3@alamaya.com', NULL, 1, '2015-10-28', '2015-10-28');
 
 -- --------------------------------------------------------
 
@@ -4492,6 +4501,34 @@ CREATE TABLE IF NOT EXISTS `member_order_product` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `member_point`
+--
+
+CREATE TABLE IF NOT EXISTS `member_point` (
+  `id_member_point` int(11) NOT NULL AUTO_INCREMENT,
+  `id_member` int(11) NOT NULL,
+  `created_at` date NOT NULL,
+  `updated_at` date NOT NULL,
+  `point` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`id_member_point`),
+  KEY `id_member` (`id_member`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `member_point`
+--
+
+INSERT INTO `member_point` (`id_member_point`, `id_member`, `created_at`, `updated_at`, `point`, `status`) VALUES
+(4, 4, '2015-10-28', '2015-10-28', 10, 1),
+(5, 4, '2015-10-28', '2015-10-28', 15, 1),
+(6, 4, '2015-10-28', '2015-10-28', 20, 1),
+(7, 4, '2015-10-28', '2015-10-28', 12, 1),
+(8, 4, '2015-10-28', '2015-10-28', 10, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migration`
 --
 
@@ -4520,6 +4557,8 @@ CREATE TABLE IF NOT EXISTS `product` (
   `name` varchar(255) NOT NULL,
   `description` text,
   `price` int(11) DEFAULT NULL,
+  `image` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
   PRIMARY KEY (`id_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -4574,6 +4613,12 @@ ALTER TABLE `member_order`
 ALTER TABLE `member_order_product`
   ADD CONSTRAINT `member_order_product_ibfk_1` FOREIGN KEY (`id_order`) REFERENCES `member_order` (`id_order`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `member_order_product_ibfk_2` FOREIGN KEY (`id_product`) REFERENCES `product` (`id_product`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `member_point`
+--
+ALTER TABLE `member_point`
+  ADD CONSTRAINT `member_point_ibfk_1` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

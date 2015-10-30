@@ -3,6 +3,8 @@
 namespace backend\models;
 
 use Yii;
+use yii\base\Model;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "product".
@@ -11,6 +13,8 @@ use Yii;
  * @property string $name
  * @property string $description
  * @property integer $price
+ * @property string $image
+ * @property integer $status
  *
  * @property MemberOrderProduct[] $memberOrderProducts
  */
@@ -30,10 +34,11 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'image', 'status'], 'required'],
             [['description'], 'string'],
-            [['price'], 'integer'],
-            [['name'], 'string', 'max' => 255]
+            [['price', 'status'], 'integer'],
+            [['name'], 'string', 'max' => 255],
+            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -47,6 +52,8 @@ class Product extends \yii\db\ActiveRecord
             'name' => 'Name',
             'description' => 'Description',
             'price' => 'Price',
+            'image' => 'Image',
+            'status' => 'Status',
         ];
     }
 
@@ -56,5 +63,15 @@ class Product extends \yii\db\ActiveRecord
     public function getMemberOrderProducts()
     {
         return $this->hasMany(MemberOrderProduct::className(), ['id_product' => 'id_product']);
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->imageFile->saveAs('uploads/product/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
