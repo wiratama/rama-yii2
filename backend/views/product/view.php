@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
+
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Product */
@@ -32,7 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description:ntext',
             'price',
-            'image',
+            // 'image',
+            [
+                'attribute'=>'image',
+                'value'=>Yii::$app->request->hostInfo.Yii::$app->request->baseUrl."/..".$model->image,
+                'format' => ['image',['width'=>'100']],
+            ],
             'status',
         ],
     ]) ?>
