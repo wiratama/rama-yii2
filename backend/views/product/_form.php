@@ -15,10 +15,15 @@ use kartik\file\FileInput;
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'price')->textInput() ?>
-    <?= $form->field($model, 'image')->widget(FileInput::classname(), [
+    <?= $form->field($model, 'point')->textInput() ?>
+    <?php echo $form->field($model, 'file_image')->widget(FileInput::classname(), [
         'options' => ['accept' => 'image/*'],
+        'pluginOptions' => [
+            'showUpload' => false,
+        ]
     ]); ?>
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?php //echo $form->field($model, 'file_image')->fileInput() ?>
+    <?= $form->field($model, 'status')->dropDownList([1=>'Promo',2=>'Regular',3=>'Disable'], ['prompt'=>'Select...']);?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

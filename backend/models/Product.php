@@ -20,6 +20,7 @@ use yii\web\UploadedFile;
  */
 class Product extends \yii\db\ActiveRecord
 {
+    public $file_image;
     /**
      * @inheritdoc
      */
@@ -34,11 +35,13 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'image', 'status'], 'required'],
+            [['name','image', 'status'], 'required'],
             [['description'], 'string'],
-            [['price', 'status'], 'integer'],
-            [['name'], 'string', 'max' => 255],
-            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['price', 'status','point'], 'integer'],
+            [['name','image'], 'string', 'max' => 255],
+            // [['file_image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            // [['file_image'], 'image', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            ['file_image', 'file', 'extensions' => ['png', 'jpg', 'gif']],
         ];
     }
 
@@ -52,7 +55,9 @@ class Product extends \yii\db\ActiveRecord
             'name' => 'Name',
             'description' => 'Description',
             'price' => 'Price',
-            'image' => 'Image',
+            'point' => 'Point',
+            'image' => 'Image Path',
+            'file_image' => 'Image File',
             'status' => 'Status',
         ];
     }
@@ -65,10 +70,15 @@ class Product extends \yii\db\ActiveRecord
         return $this->hasMany(MemberOrderProduct::className(), ['id_product' => 'id_product']);
     }
 
-    public function upload()
+    public function upload($full_image_directory,$image_name)
     {
         if ($this->validate()) {
-            $this->imageFile->saveAs('uploads/product/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            if (!is_dir($full_image_directory)) {
+                if (!mkdir($full_image_directory, 0777, true)) {
+                    $this->refresh();
+                }
+            }
+            $this->file_image->saveAs($full_image_directory . $image_name . '.' . $this->file_image->extension);
             return true;
         } else {
             return false;
