@@ -10,6 +10,26 @@ $this->title = 'Member Poits';
 $this->params['breadcrumbs'][] = ['label' => 'Members', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="row">
+    <div class="col-md-12">
+        <div class="header-content text-center">
+            <h1>MEMBER POINT</h1>
+            <div class="icon-aboutus">
+                <a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconroom.png"></a>
+                <a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconrestaurant.png"></a>
+                <a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconbar.png"></a>
+                <a href="#"><img src="<?php echo Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl();?>/images/iconpool.png"></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 text-center">
+        <div class="benefit-line">
+            <span class="link"><a href="<?=Yii::$app->urlManager->createAbsoluteUrl('product/promo'); ?>">PROMO</a>
+            </span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="link"><a href="<?=Yii::$app->urlManager->createAbsoluteUrl('member/point'); ?>">MY POINT</a></span>
+        </div>
+    </div>
+</div>
 <div class="row content">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<h2 class="text-center">MY POINT</h2>
@@ -44,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<select class="form-control select-history more-space" id="point-filter">
 					<option value="">Filter...</option>
 					<option value="all">All</option>
-					<option value="active">Active</option>
+					<option value="gained">Points gained</option>
 					<option value="used">Used</option>
 				</select>
 				<div class="table-responsive">
@@ -67,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							</tr>
 							<?php $i++;} ?>
 						</tbody>
-						<tbody id="active">
+						<tbody id="gained">
 							<?php 
 							$i=1;
 							foreach ($points_active as $point_active) {?>
@@ -101,7 +121,7 @@ $this->registerJs("
 $(document).ready(function() {
     var filter = $('#point-filter').val();
     if (filter=='') {
-       $('#active').hide();
+       $('#gained').hide();
        $('#used').hide();
        $('#all').show();
     }
@@ -109,15 +129,15 @@ $(document).ready(function() {
 $('#point-filter').on('change', function() {    
     var filter = $('#point-filter').val();
     if (filter=='all') {
-   		$('#active').hide();
+   		$('#gained').hide();
     	$('#used').hide();
     	$('#all').show();
-    } else if (filter=='active'){
+    } else if (filter=='gained'){
     	$('#used').hide();
     	$('#all').hide();
-		$('#active').show();
+		$('#gained').show();
     } else if (filter=='used'){
-		$('#active').hide();
+		$('#gained').hide();
     	$('#all').hide();
     	$('#used').show();
     }

@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Member;
+use frontend\models\Product;
 use backend\models\City;
 use backend\models\MemberPoint;
 use yii\web\Controller;
@@ -25,7 +26,7 @@ class MemberController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['myaccount','update','point'],
+                        'actions' => ['myaccount','update','point','promo'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -100,22 +101,21 @@ class MemberController extends Controller
 
     public function actionPoint()
     {
-        $points=MemberPoint::find()->where(['id_member' => Yii::$app->user->identity->id])->all();
+        $all_points=MemberPoint::find()->where(['id_member' => Yii::$app->user->identity->id])->all();
         $points_active=MemberPoint::find()->where(['id_member' => Yii::$app->user->identity->id,'status'=>1])->all();
         $points_used=MemberPoint::find()->where(['id_member' => Yii::$app->user->identity->id,'status'=>2])->all();
-        $active = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=1");
-        $active_point = $active->queryScalar();
-        $used = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=2");
-        $used_point = $used->queryScalar();
-        $total = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point");
-        $total_point = $total->queryScalar();
+        
+        $all_active = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=1 AND `id_member` = ".Yii::$app->user->identity->id)->queryScalar();
+        $all_used = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=2 AND `id_member` = ".Yii::$app->user->identity->id)->queryScalar();
+        $active=$all_active-$all_used;
+        
         return $this->render('point', [
-            'points' => $points,
+            'points' => $all_points,
             'points_active' => $points_active,
             'points_used' => $points_used,
-            'active_point' => $active_point,
-            'used_point' => $used_point,
-            'total_point' => $total_point,
+            'active_point' => $active,
+            'used_point' => $all_used,
+            'total_point' => $all_active,
         ]);
     }
 

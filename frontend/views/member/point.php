@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Member */
@@ -44,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<select class="form-control select-history more-space" id="point-filter">
 					<option value="">Select</option>
 					<option value="all">All</option>
-					<option value="active">Active</option>
+					<option value="gained">Points gained</option>
 					<option value="used">Used</option>
 				</select>
 				<div class="table-responsive">
@@ -67,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							</tr>
 							<?php $i++;} ?>
 						</tbody>
-						<tbody id="active">
+						<tbody id="gained">
 							<?php 
 							$i=1;
 							foreach ($points_active as $point_active) {?>
@@ -96,12 +97,11 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 </div>
 <?php
-use yii\web\View;
 $this->registerJs("
 $(document).ready(function() {
     var filter = $('#point-filter').val();
     if (filter=='') {
-       $('#active').hide();
+       $('#gained').hide();
        $('#used').hide();
        $('#all').show();
     }
@@ -109,15 +109,15 @@ $(document).ready(function() {
 $('#point-filter').on('change', function() {    
     var filter = $('#point-filter').val();
     if (filter=='all') {
-   		$('#active').hide();
+   		$('#gained').hide();
     	$('#used').hide();
     	$('#all').show();
-    } else if (filter=='active'){
+    } else if (filter=='gained'){
     	$('#used').hide();
     	$('#all').hide();
-		$('#active').show();
+		$('#gained').show();
     } else if (filter=='used'){
-		$('#active').hide();
+		$('#gained').hide();
     	$('#all').hide();
     	$('#used').show();
     }

@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-md-12 text-center">
         <div class="benefit-line">
-            <span class="link"><a href="">PROMO</a>
+            <span class="link"><a href="<?=Yii::$app->urlManager->createAbsoluteUrl('product/promo'); ?>">PROMO</a>
             </span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="link"><a href="<?=Yii::$app->urlManager->createAbsoluteUrl('member/point'); ?>">MY POINT</a></span>
         </div>

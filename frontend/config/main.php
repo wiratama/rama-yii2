@@ -39,7 +39,7 @@ return [
 			'class' => 'yii\web\UrlManager',
 			'enablePrettyUrl' => true,
 			'showScriptName' => true,
-			'enableStrictParsing' => false, //‘enableStrictParsing’ => true, tells Yii2 to allow only the routes that are listed in the rules.
+			// 'enableStrictParsing' => false, //‘enableStrictParsing’ => true, tells Yii2 to allow only the routes that are listed in the rules.
 			// 'rules' => [
 			// 	'/' => 'site/index',
 			// 	'about' => 'site/about',
