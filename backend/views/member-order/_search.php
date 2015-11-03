@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_member') ?>
 
-    <?= $form->field($model, 'total') ?>
+    <?= $form->field($model, 'coupon_code') ?>
 
     <?= $form->field($model, 'created_at') ?>
 

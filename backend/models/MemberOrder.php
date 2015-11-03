@@ -9,7 +9,7 @@ use Yii;
  *
  * @property integer $id_order
  * @property integer $id_member
- * @property integer $total
+ * @property string $coupon_code
  * @property string $created_at
  * @property string $updated_at
  *
@@ -32,9 +32,10 @@ class MemberOrder extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_member', 'total'], 'integer'],
-            [['total', 'created_at', 'updated_at'], 'required'],
-            [['created_at', 'updated_at'], 'safe']
+            [['id_member'], 'integer'],
+            [['created_at', 'updated_at'], 'required'],
+            [['created_at', 'updated_at'], 'safe'],
+            [['coupon_code'], 'string', 'max' => 255]
         ];
     }
 
@@ -46,7 +47,7 @@ class MemberOrder extends \yii\db\ActiveRecord
         return [
             'id_order' => 'Id Order',
             'id_member' => 'Id Member',
-            'total' => 'Total',
+            'coupon_code' => 'Coupon Code',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

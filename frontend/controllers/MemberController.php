@@ -18,7 +18,7 @@ class MemberController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                // 'only' => ['signup','myaccount','update','point'],
+                'only' => ['signup','myaccount','update','point','promo'],
                 'rules' => [
                     [
                         'actions' => ['signup'],

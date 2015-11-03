@@ -11,8 +11,6 @@ use Yii;
  * @property integer $id_order
  * @property integer $id_product
  * @property integer $quantity
- * @property integer $price
- * @property integer $total
  *
  * @property MemberOrder $idOrder
  * @property Product $idProduct
@@ -33,8 +31,8 @@ class MemberOrderProduct extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_order', 'id_product', 'quantity', 'price', 'total'], 'integer'],
-            [['quantity', 'price', 'total'], 'required']
+            [['id_order', 'id_product', 'quantity'], 'integer'],
+            [['quantity'], 'required']
         ];
     }
 
@@ -48,8 +46,6 @@ class MemberOrderProduct extends \yii\db\ActiveRecord
             'id_order' => 'Id Order',
             'id_product' => 'Id Product',
             'quantity' => 'Quantity',
-            'price' => 'Price',
-            'total' => 'Total',
         ];
     }
 

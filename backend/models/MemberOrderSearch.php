@@ -18,8 +18,8 @@ class MemberOrderSearch extends MemberOrder
     public function rules()
     {
         return [
-            [['id_order', 'id_member', 'total'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['id_order'], 'integer'],
+            [['coupon_code', 'created_at', 'updated_at','id_member'], 'safe'],
         ];
     }
 
@@ -55,13 +55,17 @@ class MemberOrderSearch extends MemberOrder
             return $dataProvider;
         }
 
+        $query->joinWith('idMember');
+
         $query->andFilterWhere([
             'id_order' => $this->id_order,
-            'id_member' => $this->id_member,
-            'total' => $this->total,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            // 'id_member' => $this->id_member,
+            // 'created_at' => $this->created_at,
+            // 'updated_at' => $this->updated_at,
         ]);
+
+        $query->andFilterWhere(['like', 'coupon_code', $this->coupon_code])
+            ->andFilterWhere(['like', 'member.name', $this->id_member]);
 
         return $dataProvider;
     }

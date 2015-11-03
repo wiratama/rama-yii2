@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2015 at 08:43 AM
+-- Generation Time: Nov 03, 2015 at 12:03 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -4448,7 +4448,7 @@ CREATE TABLE IF NOT EXISTS `member` (
 --
 
 INSERT INTO `member` (`id_member`, `id_member_category`, `name`, `phone`, `gender`, `dob`, `address`, `city`, `country`, `password`, `auth_key`, `email`, `password_reset_token`, `status`, `created_at`, `updated_at`) VALUES
-(4, NULL, 'arya wiratama', '123456789', 'Male', '2015-10-01', 'Puri Chandra Asri A 25', 1508, 100, '$2y$13$r8TyoyRpccl084Vw8fTXMud15lCSOFHHlN9o432kA7cA.7caCmGnO', 'N_zaWzpqtpK_J3PiXt-R8RtqLKmdhqFj', 'arya@alamaya.com', NULL, 2, '2015-10-27', '2015-10-29'),
+(4, NULL, 'arya wiratama', '123456789', 'Male', '2015-10-01', 'Puri Chandra Asri A 25', 1508, 100, '$2y$13$/PW6lvfjCwRSeAZB7Z67bevpzCTFgp3gMjByPOkFyWQBTMlaQBqpC', 'N_zaWzpqtpK_J3PiXt-R8RtqLKmdhqFj', 'arya@alamaya.com', NULL, 2, '2015-10-27', '2015-11-03'),
 (5, NULL, 'arya alamaya', '123456789', 'Male', '2015-10-01', 'PCA A 25', 1508, 100, '$2y$13$8vA1PyWuPRA67zWMo.rlou/MPj3vcsv29I9uZiO2Y8bYWxzRwXsBm', 'N_zaWzpqtpK_J3PiXt-R8RtqLKmdhqFj', 'arya2@alamaya.com', NULL, 2, '2015-10-28', '2015-10-28'),
 (6, NULL, 'arya alamaya3', '123456789', 'Male', '2015-10-01', 'PCA A25', 1508, 100, '$2y$13$q2R2g8c8EdnngSrIIRB3XOYKLmd48nBn7jMayUK2M5JjmHBe.csPm', 'v9217Os_6-QFenOWcd9IE_c7NO14rEXn', 'arya3@alamaya.com', NULL, 1, '2015-10-28', '2015-10-28');
 
@@ -4473,12 +4473,19 @@ CREATE TABLE IF NOT EXISTS `member_category` (
 CREATE TABLE IF NOT EXISTS `member_order` (
   `id_order` int(11) NOT NULL AUTO_INCREMENT,
   `id_member` int(11) DEFAULT NULL,
-  `total` int(11) NOT NULL,
+  `coupon_code` varchar(255) DEFAULT NULL,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL,
   PRIMARY KEY (`id_order`),
   KEY `id_member` (`id_member`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `member_order`
+--
+
+INSERT INTO `member_order` (`id_order`, `id_member`, `coupon_code`, `created_at`, `updated_at`) VALUES
+(4, 4, '737152539', '2015-11-03', '2015-11-03');
 
 -- --------------------------------------------------------
 
@@ -4491,12 +4498,17 @@ CREATE TABLE IF NOT EXISTS `member_order_product` (
   `id_order` int(11) DEFAULT NULL,
   `id_product` int(11) DEFAULT NULL,
   `quantity` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
-  `total` int(11) NOT NULL,
   PRIMARY KEY (`id_order_product`),
   KEY `id_order` (`id_order`),
   KEY `id_product` (`id_product`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `member_order_product`
+--
+
+INSERT INTO `member_order_product` (`id_order_product`, `id_order`, `id_product`, `quantity`) VALUES
+(4, 4, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -4513,7 +4525,7 @@ CREATE TABLE IF NOT EXISTS `member_point` (
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id_member_point`),
   KEY `id_member` (`id_member`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `member_point`
@@ -4523,8 +4535,8 @@ INSERT INTO `member_point` (`id_member_point`, `id_member`, `created_at`, `updat
 (4, 4, '2015-10-28', '2015-10-28', 10, 1),
 (5, 4, '2015-10-28', '2015-10-28', 15, 1),
 (6, 4, '2015-10-28', '2015-10-28', 20, 1),
-(7, 4, '2015-10-28', '2015-10-28', 12, 1),
-(8, 4, '2015-10-28', '2015-10-28', 10, 2);
+(8, 4, '2015-10-28', '2015-10-28', 10, 2),
+(12, 4, '2015-11-03', '2015-11-03', 20, 2);
 
 -- --------------------------------------------------------
 
@@ -4557,10 +4569,19 @@ CREATE TABLE IF NOT EXISTS `product` (
   `name` varchar(255) NOT NULL,
   `description` text,
   `price` int(11) DEFAULT NULL,
+  `point` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id_product`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id_product`, `name`, `description`, `price`, `point`, `image`, `status`) VALUES
+(20, 'Food & Beverage Theme Night', 'Enjoying your night with your beloved one at Samudera Restaurant - Grand Istana Rama Hotel Kuta Bali, we offers you the lusciously tasty dinner. You can take a pleasure with the beautiful view of Kuta Beach and stunning entertainment, such as: Live Band, DJ, Sexy Dancer, etc. We ensure that you will get the satisfying moment.', 90, 20, '/uploads/products/food-beverage-theme-night.jpg', 1),
+(22, 'Massage Packages', 'Reflexology can help to relieve anxiety and induce deep relaxation. Reflexology reduces stress and facilitates unimpeded blood flow throughout the body.', 90, 100, '/uploads/products/promo2.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -4589,7 +4610,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'arya_w', 'pVPZ2KqdUEs7kCiXEV5uxpJTAvlwpZRv', '$2y$13$CXLJBfTGKVwB4NNazdIT/u423YY2hzRH56Fz6rRiHt/5PPRXXTFs2', NULL, 'arya@alamaya.com', 10, 1445823505, 1445823505);
+(1, 'arya_w', 'pVPZ2KqdUEs7kCiXEV5uxpJTAvlwpZRv', '$2y$13$CXLJBfTGKVwB4NNazdIT/u423YY2hzRH56Fz6rRiHt/5PPRXXTFs2', '', 'arya@alamaya.com', 10, 1445823505, 1446526924);
 
 --
 -- Constraints for dumped tables

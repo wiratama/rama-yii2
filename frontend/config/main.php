@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
 	'id' => 'app-frontend',
+	'name'=>'Grand Istana Rama',
 	'basePath' => dirname(__DIR__),
 	'bootstrap' => ['log'],
 	'controllerNamespace' => 'frontend\controllers',
@@ -101,6 +102,9 @@ return [
 					]
 				]
 			],
+		],
+		'wpmenu' => [
+	    	'class' => 'common\components\WpmenuComponent',
 		],
 		// newadded
 	],

@@ -45,6 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				<p class="text-justify">
 					<?=$promo['description'];?>
 				</p>
+				<p class="text-justify">
+					<span class="product-point"><?=$promo['point'];?> Points</span>
+				</p>
 				<a href="<?=Yii::$app->urlManager->createAbsoluteUrl(['product/claimpromo','id'=>$promo['id_product'],'page'=>$promo['page']]); ?>" class="btn btn-pink">CLAIM THIS PROMO</a>
 			</div>
 		</div>

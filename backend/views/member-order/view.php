@@ -29,11 +29,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id_order',
-            'id_member',
-            'total',
+            'idMember.name',
+            'coupon_code',
             'created_at',
             'updated_at',
         ],
     ]) ?>
-
+    <hr>
+    Order Detail
+    <table class="table table-striped table-bordered detail-view">
+        <tbody>
+            <tr>
+                <th>Product</th>
+                <th>Points</th>
+                <th>Quantity</th>
+            </tr>
+            <?php foreach ($orders as $key => $order) { ?>
+            <tr>
+                <th><?=$order['name'];?></th>
+                <th><?=$order['point'];?></th>
+                <th><?=$order['quantity'];?></th>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
 </div>

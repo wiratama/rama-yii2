@@ -18,7 +18,7 @@ class MemberOrderProductSearch extends MemberOrderProduct
     public function rules()
     {
         return [
-            [['id_order_product', 'id_order', 'id_product', 'quantity', 'price', 'total'], 'integer'],
+            [['id_order_product', 'id_order', 'id_product', 'quantity'], 'integer'],
         ];
     }
 
@@ -59,8 +59,6 @@ class MemberOrderProductSearch extends MemberOrderProduct
             'id_order' => $this->id_order,
             'id_product' => $this->id_product,
             'quantity' => $this->quantity,
-            'price' => $this->price,
-            'total' => $this->total,
         ]);
 
         return $dataProvider;

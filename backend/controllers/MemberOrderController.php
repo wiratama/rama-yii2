@@ -8,15 +8,23 @@ use backend\models\MemberOrderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
-/**
- * MemberOrderController implements the CRUD actions for MemberOrder model.
- */
 class MemberOrderController extends Controller
 {
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index','view','create','update','delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -26,10 +34,6 @@ class MemberOrderController extends Controller
         ];
     }
 
-    /**
-     * Lists all MemberOrder models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new MemberOrderSearch();
@@ -41,23 +45,30 @@ class MemberOrderController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single MemberOrder model.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionView($id)
     {
+        $model=$this->findModel($id);
+        $models_related=MemberOrder::find($id)->with(['memberOrderProducts', 'memberOrderProducts.idProduct'])->all();
+        
+        $orders=[];
+        foreach ($models_related as $model_related) {
+            foreach ($model_related['memberOrderProducts'] as $order_product) {
+                $order_data=[];
+                $order_data['quantity']=$order_product['quantity'];
+                $order_data['name']=$order_product['idProduct']['name'];
+                $order_data['point']=$order_product['idProduct']['point'];
+                
+                $orders[]=$order_data;
+            }
+        }
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'models_related' => $models_related,
+            'orders' => $orders,
         ]);
     }
 
-    /**
-     * Creates a new MemberOrder model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
         $model = new MemberOrder();
@@ -71,12 +82,6 @@ class MemberOrderController extends Controller
         }
     }
 
-    /**
-     * Updates an existing MemberOrder model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -90,12 +95,6 @@ class MemberOrderController extends Controller
         }
     }
 
-    /**
-     * Deletes an existing MemberOrder model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -103,13 +102,6 @@ class MemberOrderController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the MemberOrder model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return MemberOrder the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = MemberOrder::findOne($id)) !== null) {

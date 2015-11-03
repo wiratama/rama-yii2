@@ -73,15 +73,13 @@ AppAsset::register($this);
 								</div>
 								<div class="collapse navbar-collapse" id="grandistanaramamenu">
 									<ul class="nav navbar-nav navbar-right">
-										<li class="link"><a href="index.php">HOME</a><hr class="menu-divider"></li>
-										<li class="navigation-divider">|</li>
-										<li class="link"><a href="memberbenefit.php">MEMBER BENEFIT</a><hr class="menu-divider"></li>
-										<li class="navigation-divider">|</li>
-										<li class="link"><a href="aboutus.php">ABOUT US</a><hr class="menu-divider"></li>
-										<li class="navigation-divider">|</li>
-										<li class="link"><a href="quotations.php">QUOTATIONS</a><hr class="menu-divider"></li>
-										<li class="navigation-divider">|</li>
-										<li class="link"><a href="contactus.php">CONTACT US</a></li>
+										<?php
+										$menus=Yii::$app->wpmenu->getwpmenu('primary-menu');
+										$lastmenu=end($menus);
+										foreach ($menus as $key => $menu) {
+										?>
+											<li class="link" id="<?=$menu['post_name'];?>"><a href="<?=$menu["guid"];?>"><?=$menu["post_title"];?></a><hr class="menu-divider"></li>
+										<?php } ?>
 									</ul>
 								</div>
 							</div>
@@ -139,11 +137,17 @@ AppAsset::register($this);
 						</div>
 						<div class="col-md-12">
 							<div class="bottom-menu">
-								<a href="">News</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<a href="">Careers</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<a href="">Testimonial</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<a href="">Sitemap</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<a href="">Awards</a>
+								<?php
+								$footermenus=Yii::$app->wpmenu->getwpmenu('second-menu');
+								$footerlastmenu=end($footermenus);
+								foreach ($footermenus as $footerkey => $footermenu) {
+									if ($footermenu!=$footerlastmenu) {
+								?>
+									<a href="<?=$footermenu['guid'];?>" id="<?=$footermenu['post_name'];?>"><?=$footermenu['post_title'];?></a>
+								&nbsp;&nbsp;|&nbsp;&nbsp;
+								<?php } else { ?>
+									<a href="<?=$footermenu['guid'];?>" id="<?=$footermenu['post_name'];?>"><?=$footermenu['post_title'];?></a>
+								<?php } } ?>
 							</div>
 						</div>
 					</div>

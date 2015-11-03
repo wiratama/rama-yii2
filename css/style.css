@@ -135,3 +135,23 @@ li.navigation-divider{padding: 13px 0px 13px 0px;}
 .dropdown-nav>li>a:hover {
 	background-color: #78244d;
 }
+li.link a {
+    text-transform: uppercase;
+}
+ul.nav.navbar-nav.navbar-right li:before {
+    content: "|";
+    color: #fff !important;
+    position: absolute;
+    padding-top: 13px;
+}
+li#home:before {
+    content: "";
+    color: #fff !important;
+    position: absolute;
+    padding-top: 13px;
+}
+span.product-point {
+    color: #9d2761;
+    font-weight: 700;
+    font-size: 15px;
+}

@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Product;
+use frontend\models\Member;
 use frontend\models\MemberOrder;
 use frontend\models\MemberOrderProduct;
 use backend\models\MemberPoint;
@@ -55,7 +56,7 @@ class ProductController extends Controller
     {
         $query = Product::find()->where(['status' => 1]);
         $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize'=>1]);
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize'=>10]);
         
         if(Yii::$app->session->get('pagestand')==null) {
             $pagestand=$pages->offset;
@@ -76,6 +77,7 @@ class ProductController extends Controller
             Image::thumbnail(Yii::$app->basePath.'/..'.$model->image , 350, 350)->save(Yii::$app->basePath.'/../resize/'.$model->image, ['quality' => 100]);
             $promos[$key]['promo_image_url']=Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl().'/resize/'.$model->image;
             $promos[$key]['page']=$pagestand;
+            $promos[$key]['point']=$model->point;
         }
 
         return $this->render('promo', [
@@ -90,10 +92,14 @@ class ProductController extends Controller
         $all_active = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=1 AND `id_member` = ".Yii::$app->user->identity->id)->queryScalar();
         $all_used = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=2 AND `id_member` = ".Yii::$app->user->identity->id)->queryScalar();
         $active=$all_active-$all_used;
+        $member=Member::findIdentity(Yii::$app->user->identity->id);
         
         if ($claim!== null and (int)$active > (int)$claim->point) {
+            $randCode=implode("",$this->getNumbers(1,99,5,1));
+
             $order=new MemberOrder();
             $order->id_member=Yii::$app->user->identity->id;
+            $order->coupon_code=$randCode;
             $order->save();
             
             $orderProduct=new MemberOrderProduct();
@@ -107,11 +113,33 @@ class ProductController extends Controller
             $point->point=$claim->point;
             $point->status=2;
             $point->save();
+
+            Yii::$app->mailer->compose(['html' => '@app/themes/rama/mail/couponCode-html', 'text' => '@app/themes/rama/mail/couponCode-text'], ['user' => $member,'coupon_code'=>$randCode])
+            ->setFrom([\Yii::$app->params['infoEmail'] => \Yii::$app->name])
+            ->setTo($member->email)
+            ->setSubject('Coupon code for ' . \Yii::$app->name)
+            ->send();
+
             return $this->redirect(['member/point']);
         } else {
             Yii::$app->session->set('pagestand', (int)$page);
+            Yii::$app->session->setFlash('warning', 'Your point is not enough to claim this promo!');
             return $this->redirect(['promo']);
         }
-        die();
+    }
+
+    public function getNumbers($min=1,$max=10,$count=1,$margin=0) {
+        $range = range(0,$max-$min);
+        $return = array();
+        for( $i=0; $i<$count; $i++) {
+            if( !$range) {
+                trigger_error("Not enough numbers to pick from!",E_USER_WARNING);
+                return $return;
+            }
+            $next = rand(0,count($range)-1);
+            $return[] = $range[$next]+$min;
+            array_splice($range,max(0,$next-$margin),$margin*2+1);
+        }
+        return $return;
     }
 }
