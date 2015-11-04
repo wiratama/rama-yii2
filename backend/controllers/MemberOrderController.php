@@ -69,7 +69,7 @@ class MemberOrderController extends Controller
         ]);
     }
 
-    public function actionCreate()
+    /*public function actionCreate()
     {
         $model = new MemberOrder();
 
@@ -100,7 +100,7 @@ class MemberOrderController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
+    }*/
 
     protected function findModel($id)
     {

@@ -3,32 +3,18 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\MemberPoint;
-use backend\models\MemberPointSearch;
+use backend\models\AuthItem;
+use backend\models\AuthItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 
-/**
- * MemberpointController implements the CRUD actions for MemberPoint model.
- */
-class MemberpointController extends Controller
+class AuthItemController extends Controller
 {
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['index','view','create','update','delete'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -38,29 +24,30 @@ class MemberpointController extends Controller
         ];
     }
 
-    /**
-     * Lists all MemberPoint models.
-     * @return mixed
-     */
     public function actionIndex()
     {
-        $searchModel = new MemberPointSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\Yii::$app->user->can('index-role')) {
+            $searchModel = new AuthItemSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new \Exception('You are not allowed to access this page');
+            
+        }
     }
 
     /**
-     * Displays a single MemberPoint model.
-     * @param integer $id
+     * Displays a single AuthItem model.
+     * @param string $id
      * @return mixed
      */
     public function actionView($id)
     {
-        if (\Yii::$app->user->can('view-member-point')) {
+        if (\Yii::$app->user->can('view-role')) {
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
@@ -71,17 +58,17 @@ class MemberpointController extends Controller
     }
 
     /**
-     * Creates a new MemberPoint model.
+     * Creates a new AuthItem model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        if (\Yii::$app->user->can('create-member-point')) {
-            $model = new MemberPoint();
+        if (\Yii::$app->user->can('create-role')) {
+            $model = new AuthItem();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id_member_point]);
+                return $this->redirect(['view', 'id' => $model->name]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -94,18 +81,18 @@ class MemberpointController extends Controller
     }
 
     /**
-     * Updates an existing MemberPoint model.
+     * Updates an existing AuthItem model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        if (\Yii::$app->user->can('update-member-point')) {
+        if (\Yii::$app->user->can('update-role')) {
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id_member_point]);
+                return $this->redirect(['view', 'id' => $model->name]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -118,14 +105,14 @@ class MemberpointController extends Controller
     }
 
     /**
-     * Deletes an existing MemberPoint model.
+     * Deletes an existing AuthItem model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        if (\Yii::$app->user->can('delete-member-point')) {
+        if (\Yii::$app->user->can('delete-role')) {
             $this->findModel($id)->delete();
             return $this->redirect(['index']);
         } else {
@@ -135,15 +122,15 @@ class MemberpointController extends Controller
     }
 
     /**
-     * Finds the MemberPoint model based on its primary key value.
+     * Finds the AuthItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return MemberPoint the loaded model
+     * @param string $id
+     * @return AuthItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MemberPoint::findOne($id)) !== null) {
+        if (($model = AuthItem::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

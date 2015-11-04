@@ -25,7 +25,7 @@ return [
     'components' => [
         'user' => [
             // 'identityClass' => 'common\models\User',
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'backend\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => [
                 'name' => '_backendIdentity',
@@ -74,6 +74,10 @@ return [
             'baseUrl' => '',
             'enablePrettyUrl' => true,
             'showScriptName' => true,
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'defaultRoles' => ['guest'],
         ],
         // newadded
     ],

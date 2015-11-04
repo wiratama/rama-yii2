@@ -5,16 +5,12 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\LoginForm;
+use backend\models\SignupForm;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
-/**
- * Site controller
- */
 class SiteController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
@@ -26,7 +22,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index','signup'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -41,9 +37,6 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -80,4 +73,27 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+    
+    // newadded
+    public function actionSignup()
+    {
+        if (\Yii::$app->user->can('create-user')) {
+            $model = new SignupForm();
+            if ($model->load(Yii::$app->request->post())) {
+                if ($user = $model->signup()) {
+                    // if (Yii::$app->getUser()->login($user)) {
+                        return $this->goHome();
+                    // }
+                }
+            }
+
+            return $this->render('signup', [
+                'model' => $model,
+            ]);
+        } else {
+            throw new \Exception('You are not allowed to access this page');
+            
+        }
+    }
+    // newadded
 }
