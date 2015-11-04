@@ -46,26 +46,25 @@ class MemberOrder extends \yii\db\ActiveRecord
     {
         return [
             'id_order' => 'Id Order',
-            'id_member' => 'Id Member',
+            'id_member' => 'Member',
             'coupon_code' => 'Coupon Code',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getIdMember()
     {
         return $this->hasOne(Member::className(), ['id_member' => 'id_member']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getMemberOrderProducts()
     {
         return $this->hasMany(MemberOrderProduct::className(), ['id_order' => 'id_order']);
+    }
+
+    public function getOrderProducts()
+    {
+        return $this->hasOne(MemberOrderProduct::className(), ['id_order' => 'id_order']);
     }
 }

@@ -1,7 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+// use yii\grid\GridView;
+use yii\widgets\Pjax;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
+use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MemberSearch */
@@ -12,47 +17,62 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="member-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+	<h1><?= Html::encode($this->title) ?></h1>
+	<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Member', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?php \yii\widgets\Pjax::begin(); ?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+	<p>
+		<?= Html::a('Create Member', ['create'], ['class' => 'btn btn-success']) ?>
+	</p>
 
-            // 'id_member',
-            // 'id_member_category',
-            'name',
-            'phone',
-            'gender',
-            // 'dob',
-            // 'address:ntext',
-            [
-                'attribute'=>'country',
-                'value'=>'countries.name',
-            ],
-            [
-                'attribute'=>'city',
-                'value'=>'cities.name',
-            ],
-            // 'countries.name',
-            // 'cities.name',
-            // 'password',
-            // 'auth_key',
-            'email:email',
-            // 'password_reset_token',
-            'status',
-            // 'created_at',
-            // 'updated_at',
+	<?php 
+	$exportGridColumns = [
+		['class' => 'yii\grid\SerialColumn'],
+		'name',
+		'dob',
+		'gender',
+		'address',
+		'phone',
+		'email:email',
+		[
+			'attribute'=>'country',
+			'value'=>'countries.name',
+		],
+		[
+			'attribute'=>'city',
+			'value'=>'cities.name',
+		],
+		'status',
+		['class' => 'yii\grid\ActionColumn'],
+	];
+	echo ExportMenu::widget([
+	    'dataProvider' => $dataProvider,
+	    'columns' => $exportGridColumns
+	]);
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-    <?php \yii\widgets\Pjax::end(); ?>
+	echo GridView::widget([
+	    'dataProvider'=> $dataProvider,
+	    'filterModel' => $searchModel,
+	    'columns' => [
+			['class' => 'yii\grid\SerialColumn'],
+			'name',
+			'gender',
+			'phone',
+			[
+				'attribute'=>'country',
+				'value'=>'countries.name',
+			],
+			[
+				'attribute'=>'city',
+				'value'=>'cities.name',
+			],
+			'email:email',
+			'status',
+			['class' => 'yii\grid\ActionColumn'],
+		],
+	    'pjax'=>true,
+	    'responsive'=>true,
+	    'hover'=>true
+	]);
+	?>
 
 </div>

@@ -12,33 +12,22 @@ use backend\models\MemberOrder;
  */
 class MemberOrderSearch extends MemberOrder
 {
-    /**
-     * @inheritdoc
-     */
+    public $product;
+
     public function rules()
     {
         return [
             [['id_order'], 'integer'],
-            [['coupon_code', 'created_at', 'updated_at','id_member'], 'safe'],
+            [['coupon_code', 'created_at', 'updated_at','id_member','product'], 'safe'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
     public function search($params)
     {
         $query = MemberOrder::find();
@@ -56,6 +45,7 @@ class MemberOrderSearch extends MemberOrder
         }
 
         $query->joinWith('idMember');
+        $query->joinWith('orderProducts.idProduct');
 
         $query->andFilterWhere([
             'id_order' => $this->id_order,
@@ -65,7 +55,8 @@ class MemberOrderSearch extends MemberOrder
         ]);
 
         $query->andFilterWhere(['like', 'coupon_code', $this->coupon_code])
-            ->andFilterWhere(['like', 'member.name', $this->id_member]);
+            ->andFilterWhere(['like', 'member.name', $this->id_member])
+            ->andFilterWhere(['like', 'product.name', $this->product]);
 
         return $dataProvider;
     }

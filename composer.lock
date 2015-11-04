@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d81d6e4ee6429438f9d996c9fdfc5f04",
-    "content-hash": "7ffd8321c97a5f0d68d624aa3659e9b7",
+    "hash": "6e5cd3415559156c2f4d3db5b437ecef",
+    "content-hash": "313ee27e89b55fcf93bb7ab1d0abc15b",
     "packages": [
         {
             "name": "2amigos/yii2-date-picker-widget",
@@ -553,6 +553,49 @@
             "time": "2015-09-13 17:39:44"
         },
         {
+            "name": "kartik-v/mpdf",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/mpdf.git",
+                "reference": "6ab0ae3a82673e514f168c8e6da02289e6d95f2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/mpdf/zipball/6ab0ae3a82673e514f168c8e6da02289e6d95f2c",
+                "reference": "6ab0ae3a82673e514f168c8e6da02289e6d95f2c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=4.3.10"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "mpdf.php",
+                    "classes"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-1.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Ian N Back"
+                }
+            ],
+            "description": "A PHP class to generate PDF files from HTML with Unicode/UTF-8 and CJK support. This is a fork of the official mPDF library.",
+            "homepage": "http://www.mpdf1.com/mpdf/index.php",
+            "keywords": [
+                "pdf",
+                "php",
+                "utf-8"
+            ],
+            "time": "2015-05-05 07:34:49"
+        },
+        {
             "name": "kartik-v/php-date-formatter",
             "version": "v1.3.1",
             "source": {
@@ -831,17 +874,64 @@
             "time": "2015-06-16 05:19:57"
         },
         {
+            "name": "kartik-v/yii2-mpdf",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-mpdf.git",
+                "reference": "4599a1d95d7e0afb3279322e302717b7e4f52dd3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/4599a1d95d7e0afb3279322e302717b7e4f52dd3",
+                "reference": "4599a1d95d7e0afb3279322e302717b7e4f52dd3",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/mpdf": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\mpdf\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "A Yii2 wrapper component for the mPDF library which generates PDF files from UTF-8 encoded HTML.",
+            "homepage": "https://github.com/kartik-v/yii2-mpdf",
+            "keywords": [
+                "component",
+                "extension",
+                "html",
+                "mpdf",
+                "pdf",
+                "utf8",
+                "yii2"
+            ],
+            "time": "2014-11-10 18:09:37"
+        },
+        {
             "name": "kartik-v/yii2-password",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-password.git",
-                "reference": "1a7cd21deef0568ae633831e006cfab5ea8b49ff"
+                "reference": "899b57d391b0b4330eba0fdb8b22369ebfdfc29b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/ac3d299cdbc4ab96e063851debcb88ef418bf755",
-                "reference": "1a7cd21deef0568ae633831e006cfab5ea8b49ff",
+                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/899b57d391b0b4330eba0fdb8b22369ebfdfc29b",
+                "reference": "899b57d391b0b4330eba0fdb8b22369ebfdfc29b",
                 "shasum": ""
             },
             "require": {
@@ -879,7 +969,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-09-12 20:19:04"
+            "time": "2015-11-03 12:13:29"
         },
         {
             "name": "kartik-v/yii2-widget-fileinput",
@@ -1637,7 +1727,8 @@
     "stability-flags": {
         "kartik-v/yii2-password": 20,
         "kartik-v/yii2-datecontrol": 20,
-        "kartik-v/yii2-widget-fileinput": 20
+        "kartik-v/yii2-widget-fileinput": 20,
+        "kartik-v/yii2-grid": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
