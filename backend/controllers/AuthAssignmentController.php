@@ -42,7 +42,7 @@ class AuthAssignmentController extends Controller
                 'dataProvider' => $dataProvider,
             ]);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -60,7 +60,7 @@ class AuthAssignmentController extends Controller
                 'model' => $this->findModel($item_name, $user_id),
             ]);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -83,7 +83,7 @@ class AuthAssignmentController extends Controller
                 ]);
             }
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -108,7 +108,7 @@ class AuthAssignmentController extends Controller
                 ]);
             }
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -126,7 +126,7 @@ class AuthAssignmentController extends Controller
             $this->findModel($item_name, $user_id)->delete();
             return $this->redirect(['index']);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }

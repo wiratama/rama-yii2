@@ -54,7 +54,7 @@ class ProductController extends Controller
                 'model' => $this->findModel($id),
             ]);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -82,7 +82,7 @@ class ProductController extends Controller
                 'model' => $model,
             ]);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -119,7 +119,7 @@ class ProductController extends Controller
                 'model' => $model,
             ]);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -133,7 +133,7 @@ class ProductController extends Controller
             }
             $model->delete();
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
 

@@ -91,7 +91,7 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }

@@ -42,7 +42,7 @@ class AuthItemChildController extends Controller
                 'dataProvider' => $dataProvider,
             ]);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -60,7 +60,7 @@ class AuthItemChildController extends Controller
                 'model' => $this->findModel($parent, $child),
             ]);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -83,7 +83,7 @@ class AuthItemChildController extends Controller
                 ]);
             }
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -108,7 +108,7 @@ class AuthItemChildController extends Controller
                 ]);
             }
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -126,7 +126,7 @@ class AuthItemChildController extends Controller
             $this->findModel($parent, $child)->delete();
             return $this->redirect(['index']);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }

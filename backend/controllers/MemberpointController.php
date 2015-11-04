@@ -65,7 +65,7 @@ class MemberpointController extends Controller
                 'model' => $this->findModel($id),
             ]);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -88,7 +88,7 @@ class MemberpointController extends Controller
                 ]);
             }
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -112,7 +112,7 @@ class MemberpointController extends Controller
                 ]);
             }
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
@@ -129,7 +129,7 @@ class MemberpointController extends Controller
             $this->findModel($id)->delete();
             return $this->redirect(['index']);
         } else {
-            throw new \Exception('You are not allowed to access this page');
+            throw new ForbiddenHttpException('You are not allowed to access this page');
             
         }
     }
