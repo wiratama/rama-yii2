@@ -33,8 +33,8 @@ class MemberOrder extends \yii\db\ActiveRecord
     {
         return [
             [['id_member'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at','doc'], 'required'],
+            [['created_at', 'updated_at','comment'], 'safe'],
             [['coupon_code'], 'string', 'max' => 255]
         ];
     }
@@ -50,6 +50,8 @@ class MemberOrder extends \yii\db\ActiveRecord
             'coupon_code' => 'Coupon Code',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'doc' => 'Date of claim',
+            'comment' => 'Comment',
         ];
     }
 

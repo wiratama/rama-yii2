@@ -31,7 +31,7 @@ AppAsset::register($this);
         'brandLabel' => 'Grand Istana Rama',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-inverse navbar-fixed-top navbar-rama',
         ],
     ]);
     $menuItems = [
@@ -42,7 +42,7 @@ AppAsset::register($this);
     } else {
         $menuItems[] = ['label' => 'Privillage', 
             'items' => [
-                ['label' => 'User', 'url' => ['/site/signup']],
+                ['label' => 'User', 'url' => ['/user/index']],
                 ['label' => 'Role', 'url' => ['/auth-item/index']],
                 ['label' => 'Role Child', 'url' => ['/auth-item-child/index']],
                 ['label' => 'Role Assignment', 'url' => ['/auth-assignment/index']],
@@ -58,6 +58,11 @@ AppAsset::register($this);
             'items' => [
                 ['label' => 'Product', 'url' => ['/product/index']],
                 ['label' => 'Order', 'url' => ['/member-order/index']],
+            ]
+        ];
+        $menuItems[] = ['label' => 'Settings', 
+            'items' => [
+                ['label' => 'Category', 'url' => ['/category/index']],
             ]
         ];
         $menuItems[] = [

@@ -40,6 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=>Yii::$app->request->hostInfo.Yii::$app->request->baseUrl."/..".$model->image,
                 'format' => ['image',['width'=>'100']],
             ],
+            'start_date',
+            'end_date',
             'status',
         ],
     ]) ?>

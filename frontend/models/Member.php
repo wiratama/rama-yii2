@@ -16,7 +16,6 @@ use backend\models\City;
  * This is the model class for table "member".
  *
  * @property integer $id_member
- * @property integer $id_member_category
  * @property string $name
  * @property string $phone
  * @property string $gender
@@ -39,7 +38,8 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
 {
     public $password_repeat;
     public $reCaptcha;
-    const STATUS_DELETED = 0;
+    public $file_image;
+    const STATUS_BLOCKED = 0;
     const STATUS_PENDING = 1;
     const STATUS_ACTIVE = 2;
     /**
@@ -56,12 +56,12 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            // [['id_member_category', 'city', 'country', 'status'], 'integer'],
-            [['id_member_category', 'status'], 'integer'],
+            // [['city', 'country', 'status'], 'integer'],
+            [['status'], 'integer'],
             [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'auth_key', 'email', 'created_at', 'updated_at'], 'required'],
             [['dob', 'created_at', 'updated_at'], 'safe'],
             [['address'], 'string'],
-            [['name', 'password', 'password_reset_token'], 'string', 'max' => 255],
+            [['name', 'password', 'password_reset_token','avatar'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 15],
             [['gender', 'email'], 'string', 'max' => 50],
             [['auth_key'], 'string', 'max' => 32],
@@ -72,8 +72,9 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
             [['password_repeat', 'password'], 'required', 'on' => 'signup'],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
             [['password'], StrengthValidator::className(), 'preset'=>'normal', 'userAttribute'=>'email'],
-            ['status', 'default', 'value' => self::STATUS_PENDING],
-            // ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_PENDING, self::STATUS_DELETED]],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            // ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_PENDING, self::STATUS_BLOCKED]],
+            ['file_image', 'file', 'extensions' => ['png', 'jpg', 'gif']],
         ];
     }
 
@@ -84,7 +85,6 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id_member' => 'Id Member',
-            'id_member_category' => 'Member type',
             'name' => 'Name',
             'phone' => 'Phone number',
             'gender' => 'Gender',
@@ -101,11 +101,6 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
-    }
-
-    public function getIdMemberCategory()
-    {
-        return $this->hasOne(MemberCategory::className(), ['id_category' => 'id_member_category']);
     }
 
     public function getMemberOrders()
@@ -223,6 +218,21 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
             $this->setPassword($this->password);
         }
         return parent::beforeSave($insert);
+    }
+
+    public function upload($full_image_directory,$image_name)
+    {
+        if ($this->validate()) {
+            if (!is_dir($full_image_directory)) {
+                if (!mkdir($full_image_directory, 0777, true)) {
+                    $this->refresh();
+                }
+            }
+            $this->file_image->saveAs($full_image_directory . $image_name . '.' . $this->file_image->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
     // newadded
 }

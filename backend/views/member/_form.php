@@ -7,6 +7,8 @@ use backend\models\Country;
 use dosamigos\datepicker\DatePicker;
 use yii\helpers\Url;
 use kartik\password\PasswordInput;
+use kartik\file\FileInput;
+use backend\models\Category;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Member */
@@ -15,7 +17,7 @@ use kartik\password\PasswordInput;
 
 <div class="member-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'gender')->radioList(['Male'=>'Male','Female'=>'Female']); ?>
@@ -31,6 +33,13 @@ use kartik\password\PasswordInput;
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'file_image')->widget(FileInput::classname(), [
+        'options' => ['accept' => 'image/*'],
+        'pluginOptions' => [
+            'initialPreview'=>(!empty($model->avatar) ? Html::img(Yii::$app->request->hostInfo.Yii::$app->request->baseUrl."/..".$model->avatar,['width'=>'250px']) : false),
+            'showUpload' => false,
+        ]
+    ]); ?>
     <?php
     $countries=Country::find()->all();
     $listData=ArrayHelper::map($countries,'country_id','name');
@@ -45,7 +54,12 @@ use kartik\password\PasswordInput;
         ]
     ]); ?>
     <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList([0=>'Blocked',1=>'Pending',2=>'Active'], ['prompt'=>'Select...']); ?>
+    <?php
+    $category=Category::find()->all();
+    $listData=ArrayHelper::map($category,'id_category','category');
+    ?>
+    <?= $form->field($model2, 'id_category')->checkboxList($listData);?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

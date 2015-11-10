@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2015 at 12:03 PM
+-- Generation Time: Nov 10, 2015 at 08:00 AM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -19,6 +19,179 @@ SET time_zone = "+00:00";
 --
 -- Database: `grand_rama`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_assignment`
+--
+
+CREATE TABLE IF NOT EXISTS `auth_assignment` (
+  `item_name` varchar(64) NOT NULL,
+  `user_id` varchar(64) NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`item_name`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `auth_assignment`
+--
+
+INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`, `updated_at`) VALUES
+('admin', '4', 1446864990, 1446864990),
+('root-admin', '1', 1446619258, 1447050859),
+('super-rama', '3', 1446864980, 1447050987),
+('view-member', '2', 1446619276, 1446619276);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item`
+--
+
+CREATE TABLE IF NOT EXISTS `auth_item` (
+  `name` varchar(64) NOT NULL,
+  `type` int(11) NOT NULL,
+  `description` text,
+  `rule_name` varchar(64) DEFAULT NULL,
+  `data` text,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`name`),
+  KEY `rule_name` (`rule_name`),
+  KEY `type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `auth_item`
+--
+
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+('admin', 2, 'Allow to create, read, update, and delete', NULL, NULL, 1446616971, 1446619177),
+('create-member', 2, 'Allow to create member', NULL, NULL, 1446616898, 1446617286),
+('create-member-point', 2, '', NULL, NULL, 1446620865, 1446620865),
+('create-product', 2, '', NULL, NULL, 1446621735, 1446621735),
+('create-role', 2, '', NULL, NULL, 1446620582, 1446620582),
+('create-role-assignment', 2, '', NULL, NULL, 1446620778, 1446620778),
+('create-role-child', 2, '', NULL, NULL, 1446620658, 1446620658),
+('create-user', 2, '', NULL, NULL, 1446620549, 1446620549),
+('delete-member', 2, 'Allow to delete member', NULL, NULL, 1446617021, 1446617303),
+('delete-member-point', 2, '', NULL, NULL, 1446620894, 1446620894),
+('delete-product', 2, '', NULL, NULL, 1446621782, 1446622259),
+('delete-role-assignment', 2, '', NULL, NULL, 1446620807, 1446620807),
+('delete-user', 2, '', NULL, NULL, 1447050554, 1447050554),
+('index-role', 2, '', NULL, NULL, 1446621897, 1446621897),
+('index-role-assignment', 2, '', NULL, NULL, 1446620817, 1446620817),
+('index-role-child', 2, '', NULL, NULL, 1446620678, 1446620678),
+('root-admin', 2, '', NULL, NULL, 1447050579, 1447050579),
+('super-admin', 2, 'Allow to access all features', NULL, NULL, 1446619794, 1446619794),
+('super-rama', 2, '', NULL, NULL, 1447050894, 1447050894),
+('update-member', 2, 'Allow to update member', NULL, NULL, 1446616919, 1446617312),
+('update-member-point', 2, '', NULL, NULL, 1446620887, 1446620887),
+('update-product', 2, '', NULL, NULL, 1446621746, 1446621746),
+('update-role', 2, '', NULL, NULL, 1446620594, 1446620594),
+('update-role-assignment', 2, '', NULL, NULL, 1446620799, 1446620799),
+('update-role-child', 2, '', NULL, NULL, 1446620667, 1446620667),
+('update-user', 2, '', NULL, NULL, 1447050541, 1447050541),
+('view-member', 2, 'Allow to view member data', NULL, NULL, 1446618494, 1446618494),
+('view-member-point', 2, '', NULL, NULL, 1446620875, 1446620875),
+('view-product', 2, '', NULL, NULL, 1446621773, 1446621773),
+('view-role', 2, '', NULL, NULL, 1446620607, 1446620607),
+('view-role-assignment', 2, '', NULL, NULL, 1446620789, 1446620789),
+('view-role-child', 2, '', NULL, NULL, 1446620717, 1446620717),
+('view-user', 2, '', NULL, NULL, 1447050524, 1447050524);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item_child`
+--
+
+CREATE TABLE IF NOT EXISTS `auth_item_child` (
+  `parent` varchar(64) NOT NULL,
+  `child` varchar(64) NOT NULL,
+  PRIMARY KEY (`parent`,`child`),
+  KEY `child` (`child`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `auth_item_child`
+--
+
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('super-admin', 'admin'),
+('super-rama', 'admin'),
+('admin', 'create-member'),
+('admin', 'create-member-point'),
+('admin', 'create-product'),
+('super-admin', 'create-role'),
+('super-admin', 'create-role-assignment'),
+('super-admin', 'create-role-child'),
+('root-admin', 'create-user'),
+('super-admin', 'create-user'),
+('super-rama', 'create-user'),
+('admin', 'delete-member'),
+('admin', 'delete-member-point'),
+('admin', 'delete-product'),
+('super-admin', 'delete-role-assignment'),
+('root-admin', 'delete-user'),
+('super-admin', 'index-role'),
+('super-admin', 'index-role-assignment'),
+('super-admin', 'index-role-child'),
+('root-admin', 'super-admin'),
+('admin', 'update-member'),
+('admin', 'update-member-point'),
+('admin', 'update-product'),
+('super-admin', 'update-role'),
+('super-admin', 'update-role-assignment'),
+('super-admin', 'update-role-child'),
+('root-admin', 'update-user'),
+('super-rama', 'update-user'),
+('admin', 'view-member'),
+('admin', 'view-member-point'),
+('admin', 'view-product'),
+('super-admin', 'view-role'),
+('super-admin', 'view-role-assignment'),
+('super-admin', 'view-role-child'),
+('root-admin', 'view-user'),
+('super-rama', 'view-user');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_rule`
+--
+
+CREATE TABLE IF NOT EXISTS `auth_rule` (
+  `name` varchar(64) NOT NULL,
+  `data` text,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE IF NOT EXISTS `category` (
+  `id_category` int(11) NOT NULL AUTO_INCREMENT,
+  `category` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_category`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id_category`, `category`) VALUES
+(1, 'Restaurant'),
+(2, 'Hotel'),
+(3, 'Spa'),
+(4, 'Tour desk');
 
 -- --------------------------------------------------------
 
@@ -4424,8 +4597,8 @@ INSERT INTO `country` (`country_id`, `name`, `status`) VALUES
 
 CREATE TABLE IF NOT EXISTS `member` (
   `id_member` int(11) NOT NULL AUTO_INCREMENT,
-  `id_member_category` int(11) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
+  `avatar` varchar(255) NOT NULL,
   `phone` varchar(15) NOT NULL,
   `gender` varchar(50) NOT NULL,
   `dob` date NOT NULL,
@@ -4439,18 +4612,18 @@ CREATE TABLE IF NOT EXISTS `member` (
   `status` int(11) NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL,
-  PRIMARY KEY (`id_member`),
-  KEY `id_member_category` (`id_member_category`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+  PRIMARY KEY (`id_member`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `member`
 --
 
-INSERT INTO `member` (`id_member`, `id_member_category`, `name`, `phone`, `gender`, `dob`, `address`, `city`, `country`, `password`, `auth_key`, `email`, `password_reset_token`, `status`, `created_at`, `updated_at`) VALUES
-(4, NULL, 'arya wiratama', '123456789', 'Male', '2015-10-01', 'Puri Chandra Asri A 25', 1508, 100, '$2y$13$/PW6lvfjCwRSeAZB7Z67bevpzCTFgp3gMjByPOkFyWQBTMlaQBqpC', 'N_zaWzpqtpK_J3PiXt-R8RtqLKmdhqFj', 'arya@alamaya.com', NULL, 2, '2015-10-27', '2015-11-03'),
-(5, NULL, 'arya alamaya', '123456789', 'Male', '2015-10-01', 'PCA A 25', 1508, 100, '$2y$13$8vA1PyWuPRA67zWMo.rlou/MPj3vcsv29I9uZiO2Y8bYWxzRwXsBm', 'N_zaWzpqtpK_J3PiXt-R8RtqLKmdhqFj', 'arya2@alamaya.com', NULL, 2, '2015-10-28', '2015-10-28'),
-(6, NULL, 'arya alamaya3', '123456789', 'Male', '2015-10-01', 'PCA A25', 1508, 100, '$2y$13$q2R2g8c8EdnngSrIIRB3XOYKLmd48nBn7jMayUK2M5JjmHBe.csPm', 'v9217Os_6-QFenOWcd9IE_c7NO14rEXn', 'arya3@alamaya.com', NULL, 1, '2015-10-28', '2015-10-28');
+INSERT INTO `member` (`id_member`, `name`, `avatar`, `phone`, `gender`, `dob`, `address`, `city`, `country`, `password`, `auth_key`, `email`, `password_reset_token`, `status`, `created_at`, `updated_at`) VALUES
+(4, 'arya wiratama', '/uploads/avatars/arya@alamaya.com.jpg', '123456789', 'Male', '2015-10-01', 'Puri Chandra Asri A 25', 1508, 100, '$2y$13$7eUo2SYQ2In0sfArKBRbUeEeJWUbqlyJq1RwmDD/NjtKWIRLGAiCe', 'N_zaWzpqtpK_J3PiXt-R8RtqLKmdhqFj', 'arya@alamaya.com', 'gcroY7qaK3fP06BcPwSBxtHH9uvlAWeW_1446712035', 2, '2015-10-27', '2015-11-10'),
+(5, 'arya alamaya', '', '123456789', 'Male', '2015-10-01', 'PCA A 25', 1508, 100, '$2y$13$8vA1PyWuPRA67zWMo.rlou/MPj3vcsv29I9uZiO2Y8bYWxzRwXsBm', 'N_zaWzpqtpK_J3PiXt-R8RtqLKmdhqFj', 'arya2@alamaya.com', NULL, 2, '2015-10-28', '2015-10-28'),
+(6, 'arya alamaya3', '', '123456789', 'Male', '2015-10-01', 'PCA A25', 1508, 100, '$2y$13$q2R2g8c8EdnngSrIIRB3XOYKLmd48nBn7jMayUK2M5JjmHBe.csPm', 'v9217Os_6-QFenOWcd9IE_c7NO14rEXn', 'arya3@alamaya.com', NULL, 1, '2015-10-28', '2015-10-28'),
+(7, 'Eko Mahendro', '', '081993191161', 'Male', '1978-06-28', 'Tabanan', 1508, 100, '$2y$13$PHI55dr6Q/dyQ4adEG36GO9d7ceEp9205vGKjK7xicSF8UE/unpka', 'Bmx6l0pzPHfA7xw2RTsNbYMC9i9MTEhL', 'it@grandistanarama.com', NULL, 2, '2015-11-06', '2015-11-06');
 
 -- --------------------------------------------------------
 
@@ -4459,10 +4632,21 @@ INSERT INTO `member` (`id_member`, `id_member_category`, `name`, `phone`, `gende
 --
 
 CREATE TABLE IF NOT EXISTS `member_category` (
-  `id_category` int(11) NOT NULL AUTO_INCREMENT,
-  `category` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_category`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `id_member_category` int(11) NOT NULL AUTO_INCREMENT,
+  `id_category` int(11) DEFAULT NULL,
+  `id_member` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_member_category`),
+  KEY `id_category` (`id_category`,`id_member`),
+  KEY `id_member` (`id_member`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `member_category`
+--
+
+INSERT INTO `member_category` (`id_member_category`, `id_category`, `id_member`) VALUES
+(3, 1, 4),
+(4, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -4474,18 +4658,23 @@ CREATE TABLE IF NOT EXISTS `member_order` (
   `id_order` int(11) NOT NULL AUTO_INCREMENT,
   `id_member` int(11) DEFAULT NULL,
   `coupon_code` varchar(255) DEFAULT NULL,
+  `doc` date NOT NULL,
+  `comment` text,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL,
   PRIMARY KEY (`id_order`),
   KEY `id_member` (`id_member`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `member_order`
 --
 
-INSERT INTO `member_order` (`id_order`, `id_member`, `coupon_code`, `created_at`, `updated_at`) VALUES
-(4, 4, '737152539', '2015-11-03', '2015-11-03');
+INSERT INTO `member_order` (`id_order`, `id_member`, `coupon_code`, `doc`, `comment`, `created_at`, `updated_at`) VALUES
+(4, 4, '737152539', '0000-00-00', NULL, '2015-11-03', '2015-11-03'),
+(5, 4, '4023826951', '0000-00-00', NULL, '2015-11-05', '2015-11-05'),
+(9, 4, '1563105297', '2015-11-20', '0', '2015-11-10', '2015-11-10'),
+(10, 4, '207428474', '2015-11-20', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2015-11-10', '2015-11-10');
 
 -- --------------------------------------------------------
 
@@ -4501,14 +4690,17 @@ CREATE TABLE IF NOT EXISTS `member_order_product` (
   PRIMARY KEY (`id_order_product`),
   KEY `id_order` (`id_order`),
   KEY `id_product` (`id_product`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `member_order_product`
 --
 
 INSERT INTO `member_order_product` (`id_order_product`, `id_order`, `id_product`, `quantity`) VALUES
-(4, 4, 20, 1);
+(4, 4, 20, 1),
+(5, 5, 20, 1),
+(9, 9, 20, 1),
+(10, 10, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -4525,7 +4717,7 @@ CREATE TABLE IF NOT EXISTS `member_point` (
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id_member_point`),
   KEY `id_member` (`id_member`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `member_point`
@@ -4536,7 +4728,15 @@ INSERT INTO `member_point` (`id_member_point`, `id_member`, `created_at`, `updat
 (5, 4, '2015-10-28', '2015-10-28', 15, 1),
 (6, 4, '2015-10-28', '2015-10-28', 20, 1),
 (8, 4, '2015-10-28', '2015-10-28', 10, 2),
-(12, 4, '2015-11-03', '2015-11-03', 20, 2);
+(12, 4, '2015-11-03', '2015-11-03', 20, 2),
+(13, 4, '2015-11-05', '2015-11-05', 25, 1),
+(14, 5, '2015-11-05', '2015-11-05', 10, 1),
+(15, 4, '2015-11-05', '2015-11-05', 20, 2),
+(16, 4, '2015-11-05', '2015-11-05', 10, 1),
+(17, 5, '2015-11-10', '2015-11-10', 20, 1),
+(18, 4, '2015-11-10', '2015-11-10', 100, 1),
+(22, 4, '2015-11-10', '2015-11-10', 20, 2),
+(23, 4, '2015-11-10', '2015-11-10', 20, 2);
 
 -- --------------------------------------------------------
 
@@ -4572,6 +4772,8 @@ CREATE TABLE IF NOT EXISTS `product` (
   `point` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
   `status` int(11) NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
   PRIMARY KEY (`id_product`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
@@ -4579,9 +4781,35 @@ CREATE TABLE IF NOT EXISTS `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id_product`, `name`, `description`, `price`, `point`, `image`, `status`) VALUES
-(20, 'Food & Beverage Theme Night', 'Enjoying your night with your beloved one at Samudera Restaurant - Grand Istana Rama Hotel Kuta Bali, we offers you the lusciously tasty dinner. You can take a pleasure with the beautiful view of Kuta Beach and stunning entertainment, such as: Live Band, DJ, Sexy Dancer, etc. We ensure that you will get the satisfying moment.', 90, 20, '/uploads/products/food-beverage-theme-night.jpg', 1),
-(22, 'Massage Packages', 'Reflexology can help to relieve anxiety and induce deep relaxation. Reflexology reduces stress and facilitates unimpeded blood flow throughout the body.', 90, 100, '/uploads/products/promo2.jpg', 1);
+INSERT INTO `product` (`id_product`, `name`, `description`, `price`, `point`, `image`, `status`, `start_date`, `end_date`) VALUES
+(20, 'Food & Beverage Theme Night', 'Enjoying your night with your beloved one at Samudera Restaurant - Grand Istana Rama Hotel Kuta Bali, we offers you the lusciously tasty dinner. You can take a pleasure with the beautiful view of Kuta Beach and stunning entertainment, such as: Live Band, DJ, Sexy Dancer, etc. We ensure that you will get the satisfying moment.', 90000, 20, '/uploads/products/food-beverage-theme-night.jpg', 1, '2015-11-01', '2015-12-31'),
+(22, 'Massage Packages', 'Reflexology can help to relieve anxiety and induce deep relaxation. Reflexology reduces stress and facilitates unimpeded blood flow throughout the body.', 90, 100, '/uploads/products/promo2.jpg', 1, '2015-11-01', '2015-12-31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_category`
+--
+
+CREATE TABLE IF NOT EXISTS `product_category` (
+  `id_product_category` int(11) NOT NULL AUTO_INCREMENT,
+  `id_product` int(11) DEFAULT NULL,
+  `id_category` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_product_category`),
+  KEY `id_product` (`id_product`,`id_category`),
+  KEY `id_category` (`id_category`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `product_category`
+--
+
+INSERT INTO `product_category` (`id_product_category`, `id_product`, `id_category`) VALUES
+(9, 20, 1),
+(10, 20, 2),
+(11, 20, 3),
+(12, 22, 2),
+(13, 22, 3);
 
 -- --------------------------------------------------------
 
@@ -4603,24 +4831,46 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `password_reset_token` (`password_reset_token`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'arya_w', 'pVPZ2KqdUEs7kCiXEV5uxpJTAvlwpZRv', '$2y$13$CXLJBfTGKVwB4NNazdIT/u423YY2hzRH56Fz6rRiHt/5PPRXXTFs2', '', 'arya@alamaya.com', 10, 1445823505, 1446526924);
+(1, 'arya_w', 'pVPZ2KqdUEs7kCiXEV5uxpJTAvlwpZRv', '$2y$13$CXLJBfTGKVwB4NNazdIT/u423YY2hzRH56Fz6rRiHt/5PPRXXTFs2', '', 'arya@alamaya.com', 10, 1445823505, 1446526924),
+(3, 'istana-rama-admin', 'hKGKhROP5iAfQTF9Pi9pvVftztbhKp83', '$2y$13$SL2mFKlBzN1y5F6EBRx6b.ZgE0U5KYKyYxAqh8MyurxrJoO24emEq', NULL, 'nana@alamaya.com', 10, 1446801490, 1446801490),
+(4, 'istana-rama-staff', '0O8TPiMVGJeKa8HhVGdpTBO-0Qu3jXNr', '$2y$13$dLGqJ3U4Xm5eE35aUvM3G.YSa34YhKBPTm5B9U0ZUGefBnD4pqMuK', NULL, 'support@alamaya.com', 10, 1446801579, 1446801579);
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `member`
+-- Constraints for table `auth_assignment`
 --
-ALTER TABLE `member`
-  ADD CONSTRAINT `member_ibfk_1` FOREIGN KEY (`id_member_category`) REFERENCES `member_category` (`id_category`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `auth_assignment`
+  ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `member_category`
+--
+ALTER TABLE `member_category`
+  ADD CONSTRAINT `member_category_ibfk_2` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `member_category_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `category` (`id_category`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `member_order`

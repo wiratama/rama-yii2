@@ -7,15 +7,37 @@ use backend\models\Country;
 use dosamigos\datepicker\DatePicker;
 use yii\helpers\Url;
 use kartik\password\PasswordInput;
+use kartik\file\FileInput;
+use frontend\models\Category;
 ?>
 <?php //echo Yii::$app->request->hostInfo.Yii::$app->homeUrl;?>
 <div class="member-form">
 
     <?php $form = ActiveForm::begin([
         'options' => [
-            'class' => 'form-horizontal'
+            'class' => 'form-horizontal',
+            'enctype' => 'multipart/form-data',
         ],
     ]); ?>
+
+    <?php $field = $form->field($model, 'file_image'); echo $field->begin(); ?>
+        <?= Html::activeLabel($model, 'file_image',['class'=>'col-sm-2 control-label']); ?>
+        <div class="col-sm-10">
+            <?= FileInput::widget([
+                'model' => $model,
+                'attribute' => 'file_image',
+                'options' => [
+                    'multiple' => false,
+                    'accept' => 'image/*',
+                ],
+                'pluginOptions' => [
+                    'initialPreview'=>(!empty($model->avatar) ? Html::img(Yii::$app->request->hostInfo.Yii::$app->request->baseUrl.$model->avatar,['width'=>'250px']) : false),
+                    'showUpload' => false,
+                ]
+            ]); ?>
+            <?= Html::error($model, 'file_image',['class'=>'help-block']); ?>
+        </div>
+    <?= $field->end() ?>
 
     <?php $field = $form->field($model, 'name'); echo $field->begin(); ?>
         <?= Html::activeLabel($model, 'name',['class'=>'col-sm-2 control-label']); ?>
@@ -108,6 +130,18 @@ use kartik\password\PasswordInput;
             <?= Html::error($model, 'password_repeat',['class'=>'help-block']); ?>
         </div>
     <?= $field->end() ?>
+    
+    <?php $field = $form->field($model2, 'id_category'); echo $field->begin(); ?>
+        <?= Html::activeLabel($model2, 'id_category',['class'=>'col-sm-2 control-label']); ?>
+        <div class="col-sm-10">
+            <?php
+            $category=Category::find()->all();
+            $listData=ArrayHelper::map($category,'id_category','category');
+            ?>
+            <?= Html::activeCheckboxList($model2, 'id_category',$listData); ?>
+            <?= Html::error($model2, 'id_category',['class'=>'help-block']); ?>
+        </div>
+    <?= $field->end() ?>
 
     <?php $field = $form->field($model, 'reCaptcha'); echo $field->begin(); ?>
         <label class="col-sm-2 control-label">&nbsp;</label>
@@ -124,6 +158,7 @@ use kartik\password\PasswordInput;
         <label class="col-sm-2 control-label">&nbsp;</label>
         <div class="col-sm-10">
             <?= Html::submitButton($model->isNewRecord ? 'Save Profile' : 'Update Profile', ['class' => 'btn btn-pink']) ?>
+            <a href="<?=Yii::$app->urlManager->createAbsoluteUrl('member/myaccount'); ?>" class="btn btn-pink">Cancel</a>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

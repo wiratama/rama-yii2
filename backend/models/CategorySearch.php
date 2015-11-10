@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\MemberCategory;
+use backend\models\Category;
 
 /**
- * MemberCategorySearch represents the model behind the search form about `backend\models\MemberCategory`.
+ * CategorySearch represents the model behind the search form about `backend\models\Category`.
  */
-class MemberCategorySearch extends MemberCategory
+class CategorySearch extends Category
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class MemberCategorySearch extends MemberCategory
      */
     public function search($params)
     {
-        $query = MemberCategory::find();
+        $query = Category::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -29,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id_member',
-            'id_member_category',
             'name',
             'phone',
             'gender',

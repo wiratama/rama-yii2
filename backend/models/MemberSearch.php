@@ -18,7 +18,7 @@ class MemberSearch extends Member
     public function rules()
     {
         return [
-            [['id_member', 'id_member_category', 'status'], 'integer'],
+            [['id_member', 'status'], 'integer'],
             [['name', 'phone', 'gender', 'dob', 'address', 'password', 'auth_key', 'email', 'password_reset_token', 'created_at', 'updated_at', 'city', 'country'], 'safe'],
         ];
     }
@@ -60,7 +60,6 @@ class MemberSearch extends Member
 
         $query->andFilterWhere([
             'id_member' => $this->id_member,
-            // 'id_member_category' => $this->id_member_category,
             // 'dob' => $this->dob,
             // 'city' => $this->city,
             // 'country' => $this->country,

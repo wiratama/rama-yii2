@@ -15,8 +15,8 @@ class MemberOrder extends \yii\db\ActiveRecord
     {
         return [
             [['id_member'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
-            [['created_at', 'updated_at','coupon_code'], 'safe']
+            [['created_at', 'updated_at','doc'], 'required'],
+            [['created_at', 'updated_at','coupon_code','comment'], 'safe']
         ];
     }
 

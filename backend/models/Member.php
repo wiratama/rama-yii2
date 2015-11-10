@@ -3,7 +3,6 @@
 namespace backend\models;
 
 use Yii;
-use kartik\password\StrengthValidator;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -11,12 +10,12 @@ use yii\web\IdentityInterface;
 use yii\base\Event;
 use backend\models\Country;
 use backend\models\City;
+use kartik\password\StrengthValidator;
 
 /**
  * This is the model class for table "member".
  *
  * @property integer $id_member
- * @property integer $id_member_category
  * @property string $name
  * @property string $phone
  * @property string $gender
@@ -38,6 +37,7 @@ use backend\models\City;
 class Member extends \yii\db\ActiveRecord
 {
     public $password_repeat;
+    public $file_image;
     const STATUS_DELETED = 0;
     const STATUS_PENDING = 1;
     const STATUS_ACTIVE = 2;
@@ -55,11 +55,11 @@ class Member extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_member_category', 'city', 'country', 'status'], 'integer'],
+            [['city', 'country', 'status'], 'integer'],
             [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'auth_key', 'email', 'status', 'created_at', 'updated_at'], 'required'],
             [['dob', 'created_at', 'updated_at'], 'safe'],
             [['address'], 'string'],
-            [['name', 'password', 'password_reset_token'], 'string', 'max' => 255],
+            [['name', 'password', 'password_reset_token','avatar'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 15],
             [['gender', 'email'], 'string', 'max' => 50],
             [['auth_key'], 'string', 'max' => 32],
@@ -69,6 +69,7 @@ class Member extends \yii\db\ActiveRecord
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
             [['password'], StrengthValidator::className(), 'preset'=>'normal', 'userAttribute'=>'email'],
             ['status', 'default', 'value' => self::STATUS_PENDING],
+            ['file_image', 'file', 'extensions' => ['png', 'jpg', 'gif']],
         ];
     }
 
@@ -79,7 +80,6 @@ class Member extends \yii\db\ActiveRecord
     {
         return [
             'id_member' => 'Id Member',
-            'id_member_category' => 'Id Member Category',
             'name' => 'Name',
             'phone' => 'Phone',
             'gender' => 'Gender',
@@ -99,7 +99,7 @@ class Member extends \yii\db\ActiveRecord
 
     public function getIdMemberCategory()
     {
-        return $this->hasOne(MemberCategory::className(), ['id_category' => 'id_member_category']);
+        return $this->hasMany(MemberCategory::className(), ['id_member' => 'id_member']);
     }
 
     public function getMemberOrders()
@@ -143,5 +143,20 @@ class Member extends \yii\db\ActiveRecord
             $this->setPassword($this->password);
         }
         return parent::beforeSave($insert);
+    }
+
+    public function upload($full_image_directory,$image_name)
+    {
+        if ($this->validate()) {
+            if (!is_dir($full_image_directory)) {
+                if (!mkdir($full_image_directory, 0777, true)) {
+                    $this->refresh();
+                }
+            }
+            $this->file_image->saveAs($full_image_directory . $image_name . '.' . $this->file_image->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

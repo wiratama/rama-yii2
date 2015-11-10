@@ -7,10 +7,12 @@ use Yii;
 /**
  * This is the model class for table "member_category".
  *
+ * @property integer $id_member_category
  * @property integer $id_category
- * @property string $category
+ * @property integer $id_member
  *
- * @property Member[] $members
+ * @property Member $idMember
+ * @property Category $idCategory
  */
 class MemberCategory extends \yii\db\ActiveRecord
 {
@@ -28,8 +30,7 @@ class MemberCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category'], 'required'],
-            [['category'], 'string', 'max' => 255]
+            [['id_category', 'id_member'], 'integer']
         ];
     }
 
@@ -39,16 +40,25 @@ class MemberCategory extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_category' => 'Id Category',
-            'category' => 'Category',
+            'id_member_category' => 'Id Member Category',
+            'id_category' => 'Category',
+            'id_member' => 'Member',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMembers()
+    public function getIdMember()
     {
-        return $this->hasMany(Member::className(), ['id_member_category' => 'id_category']);
+        return $this->hasOne(Member::className(), ['id_member' => 'id_member']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdCategory()
+    {
+        return $this->hasOne(Category::className(), ['id_category' => 'id_category']);
     }
 }

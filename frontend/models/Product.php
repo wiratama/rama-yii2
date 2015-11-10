@@ -3,7 +3,6 @@
 namespace frontend\models;
 
 use Yii;
-
 class Product extends \yii\db\ActiveRecord
 {
     public static function tableName()
@@ -17,6 +16,7 @@ class Product extends \yii\db\ActiveRecord
             [['name', 'point', 'image', 'status'], 'required'],
             [['description'], 'string'],
             [['price', 'point', 'status'], 'integer'],
+            [['start_date', 'end_date'], 'safe'],
             [['name', 'image'], 'string', 'max' => 255]
         ];
     }
@@ -31,11 +31,18 @@ class Product extends \yii\db\ActiveRecord
             'point' => 'Point',
             'image' => 'Image',
             'status' => 'Status',
+            'start_date' => 'Start Date',
+            'end_date' => 'End Date',
         ];
     }
 
     public function getMemberOrderProducts()
     {
         return $this->hasMany(MemberOrderProduct::className(), ['id_product' => 'id_product']);
+    }
+
+    public function getProductCategories()
+    {
+        return $this->hasMany(ProductCategory::className(), ['id_product' => 'id_product']);
     }
 }

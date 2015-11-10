@@ -6,6 +6,7 @@ use frontend\models\Product;
 use frontend\models\Member;
 use frontend\models\MemberOrder;
 use frontend\models\MemberOrderProduct;
+use frontend\models\ClaimPromo;
 use backend\models\MemberPoint;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -54,9 +55,11 @@ class ProductController extends Controller
 
     public function actionPromo()
     {
-        $query = Product::find()->where(['status' => 1]);
+        $claimpromo=new ClaimPromo();
+        // $query = Product::find()->where(['status' => 1]);
+        $query = Product::find()->with('productCategories.idCategory')->where('status=1 and (start_date < NOW() - INTERVAL 1 DAY) and (end_date > NOW() - INTERVAL 1 DAY)');
         $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize'=>10]);
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize'=>5]);
         
         if(Yii::$app->session->get('pagestand')==null) {
             $pagestand=$pages->offset;
@@ -68,9 +71,15 @@ class ProductController extends Controller
         $models = $query->offset($pagestand)
             ->limit($pages->limit)
             ->all();
-        
         $promos=[];
         foreach ($models as $key => $model) {
+            $promos[$key]['category']=[];
+            $i=0;
+            foreach($model['productCategories'] as $dataCategory) {
+                $promos[$key]['category'][$i]=$dataCategory['idCategory']->category;
+                $i++;
+            }
+
             $promos[$key]['id_product']=$model->id_product;
             $promos[$key]['name']=$model->name;
             $promos[$key]['description']=$model->description;
@@ -83,47 +92,66 @@ class ProductController extends Controller
         return $this->render('promo', [
             'promos' => $promos,
             'pages' => $pages,
+            'claimpromo' => $claimpromo,
         ]);
     }
 
-    public function actionClaimpromo($id, $page)
+    // public function actionClaimpromo($id, $page)
+    public function actionClaimpromo()
     {
-        $claim = Product::find()->where(['status' => 1,'id_product'=>(int)$id])->one();
-        $all_active = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=1 AND `id_member` = ".Yii::$app->user->identity->id)->queryScalar();
-        $all_used = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=2 AND `id_member` = ".Yii::$app->user->identity->id)->queryScalar();
-        $active=$all_active-$all_used;
-        $member=Member::findIdentity(Yii::$app->user->identity->id);
-        
-        if ($claim!== null and (int)$active > (int)$claim->point) {
-            $randCode=implode("",$this->getNumbers(1,99,5,1));
+        $model=new ClaimPromo();
+        if ($model->load(Yii::$app->request->post())) {
+            $post=Yii::$app->request->post('ClaimPromo');
 
-            $order=new MemberOrder();
-            $order->id_member=Yii::$app->user->identity->id;
-            $order->coupon_code=$randCode;
-            $order->save();
+            $claim = Product::find()->where(['status' => 1,'id_product'=>(int)$post['id']])->one();
+            $all_active = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=1 AND `id_member` = ".Yii::$app->user->identity->id)->queryScalar();
+            $all_used = Yii::$app->db->createCommand("SELECT sum(`point`) FROM member_point mp WHERE `status`=2 AND `id_member` = ".Yii::$app->user->identity->id)->queryScalar();
+            $active=$all_active-$all_used;
+            $member=Member::findIdentity(Yii::$app->user->identity->id);
             
-            $orderProduct=new MemberOrderProduct();
-            $orderProduct->id_order=$order->id_order;
-            $orderProduct->id_product=$claim->id_product;
-            $orderProduct->quantity=1;
-            $orderProduct->save();
+            if ($claim!== null and (int)$active > (int)$claim->point) {
+                $randCode=implode("",$this->getNumbers(1,99,5,1));
 
-            $point = new MemberPoint();
-            $point->id_member=Yii::$app->user->identity->id;
-            $point->point=$claim->point;
-            $point->status=2;
-            $point->save();
+                $order=new MemberOrder();
+                $order->id_member=Yii::$app->user->identity->id;
+                $order->coupon_code=$randCode;
+                $order->doc=$post['doc'];
+                $order->comment=$post['comment'];
+                $order->save();
+                
+                $orderProduct=new MemberOrderProduct();
+                $orderProduct->id_order=$order->id_order;
+                $orderProduct->id_product=$claim->id_product;
+                $orderProduct->quantity=1;
+                $orderProduct->save();
 
-            Yii::$app->mailer->compose(['html' => '@app/themes/rama/mail/couponCode-html', 'text' => '@app/themes/rama/mail/couponCode-text'], ['user' => $member,'coupon_code'=>$randCode])
-            ->setFrom([\Yii::$app->params['infoEmail'] => \Yii::$app->name])
-            ->setTo($member->email)
-            ->setSubject('Coupon code for ' . \Yii::$app->name)
-            ->send();
+                $point = new MemberPoint();
+                $point->id_member=Yii::$app->user->identity->id;
+                $point->point=$claim->point;
+                $point->status=2;
+                $point->save();
 
-            return $this->redirect(['member/point']);
+                Yii::$app->mailer->compose(['html' => '@app/themes/rama/mail/couponCode-html', 'text' => '@app/themes/rama/mail/couponCode-text'], ['user' => $member,'coupon_code'=>$randCode,'doc'=>$post['doc']])
+                ->setFrom([\Yii::$app->params['infoEmail'] => \Yii::$app->name])
+                ->setTo($member->email)
+                ->setSubject('Coupon code for ' . \Yii::$app->name)
+                ->send();
+
+                Yii::$app->mailer->compose(['html' => '@app/themes/rama/mail/claimedCode-html', 'text' => '@app/themes/rama/mail/claimedCode-text'], ['coupon_code'=>$randCode,'doc'=>$post['doc'],'customer_mail'=>$member->email])
+                ->setFrom([\Yii::$app->params['infoEmail'] => \Yii::$app->name])
+                ->setTo(\Yii::$app->params['itEmail'])
+                ->setSubject('New order claimed ' . \Yii::$app->name)
+                ->send();
+
+                return $this->redirect(['member/point']);
+            } else {
+                Yii::$app->session->set('pagestand', (int)$post['page']);
+                Yii::$app->session->setFlash('warning', 'Your point is not enough to claim this promo!');
+                return $this->redirect(['promo']);
+            }
         } else {
-            Yii::$app->session->set('pagestand', (int)$page);
-            Yii::$app->session->setFlash('warning', 'Your point is not enough to claim this promo!');
+            Yii::$app->session->set('pagestand', (int)$post['page']);
+            Yii::$app->session->setFlash('warning', 'Please fill the form carefully');
             return $this->redirect(['promo']);
         }
     }

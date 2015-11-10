@@ -155,3 +155,19 @@ span.product-point {
     font-weight: 700;
     font-size: 15px;
 }
+span.product-category {
+    color: #9d2761;
+    font-weight: 500;
+    font-size: 15px;
+    font-style: italic;
+}
+hr.rama {
+	border: 0;
+    border-top: 1px solid #6B6A69;
+}
+img.img-profile {
+	border-radius: 140px;
+    width: 200px;
+    height: 200px;
+    margin-top: 35px;
+}

@@ -35,12 +35,10 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name','image', 'status'], 'required'],
+            [['name','image', 'status','start_date','end_date'], 'required'],
             [['description'], 'string'],
             [['price', 'status','point'], 'integer'],
             [['name','image'], 'string', 'max' => 255],
-            // [['file_image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
-            // [['file_image'], 'image', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
             ['file_image', 'file', 'extensions' => ['png', 'jpg', 'gif']],
         ];
     }
@@ -59,6 +57,8 @@ class Product extends \yii\db\ActiveRecord
             'image' => 'Image Path',
             'file_image' => 'Image File',
             'status' => 'Status',
+            'start_date' => 'Start Date',
+            'end_date' => 'End Date',
         ];
     }
 

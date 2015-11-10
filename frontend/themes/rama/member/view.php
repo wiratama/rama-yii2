@@ -32,10 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <div class="row">
     <div class="col-md-12 form-member-profile">
-        <h2 class="text-center"><?= Html::encode($this->title) ?></h2>
+        <?=Html::img($avatar, ['class' => 'img-responsive center-block img-rounded img-profile']);?>
         <p>
-            <?= Html::a('Update', ['update'], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('<span class="glyphicon glyphicon-pencil pencil-profile"></span>Edit', ['update'], ['class' => 'btn btn-pink']) ?>
         </p>
+        <hr class="rama">
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
