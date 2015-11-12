@@ -48,23 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				<p class="text-justify">
 					<?=$promo['description'];?>
 				</p>
-				<?php /*if (!empty($promo['category'])) {?>
-				<p class="text-justify">
-					<?php 
-					$lastcat=end($promo['category']);
-					foreach($promo['category'] as $category) {
-						if ($category!=$lastcat) {
-					?>
-						<span class="product-category"><?=$category;?></span>, 
-					<?php } else { ?>
-						<span class="product-category"><?=$category;?></span>
-					<?php } } ?>
-				</p>
-				<?php }*/ ?>
 				<p class="text-justify">
 					<span class="product-point"><?=$promo['point'];?> Points</span>
 				</p>
-				<?php /*<a href="<?=Yii::$app->urlManager->createAbsoluteUrl(['product/claimpromo','id'=>$promo['id_product'],'page'=>$promo['page']]); ?>" class="btn btn-pink">CLAIM THIS PROMO</a>*/ ?>
 				<a href="javascript:void(0)" class="btn btn-pink" onclick="claimPromo(<?php echo $promo['id_product'].",".$promo['page']?>);">CLAIM THIS PROMO</a>
 				
 				<div id="promo-modal<?=$promo['id_product'];?>" class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="false">
