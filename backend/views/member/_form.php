@@ -59,7 +59,7 @@ use backend\models\Category;
     $category=Category::find()->all();
     $listData=ArrayHelper::map($category,'id_category','category');
     ?>
-    <?= $form->field($model2, 'id_category')->checkboxList($listData);?>
+    <?= $form->field($model, 'id_category')->radioList($listData);?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

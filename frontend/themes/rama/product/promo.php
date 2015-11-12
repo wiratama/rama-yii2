@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<p class="text-justify">
 					<?=$promo['description'];?>
 				</p>
-				<?php if (!empty($promo['category'])) {?>
+				<?php /*if (!empty($promo['category'])) {?>
 				<p class="text-justify">
 					<?php 
 					$lastcat=end($promo['category']);
@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<span class="product-category"><?=$category;?></span>
 					<?php } } ?>
 				</p>
-				<?php } ?>
+				<?php }*/ ?>
 				<p class="text-justify">
 					<span class="product-point"><?=$promo['point'];?> Points</span>
 				</p>

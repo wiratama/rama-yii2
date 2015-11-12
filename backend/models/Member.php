@@ -55,8 +55,8 @@ class Member extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['city', 'country', 'status'], 'integer'],
-            [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'auth_key', 'email', 'status', 'created_at', 'updated_at'], 'required'],
+            [['city', 'country', 'status','id_category'], 'integer'],
+            [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'auth_key', 'email', 'status', 'created_at', 'updated_at','id_category'], 'required'],
             [['dob', 'created_at', 'updated_at'], 'safe'],
             [['address'], 'string'],
             [['name', 'password', 'password_reset_token','avatar'], 'string', 'max' => 255],
@@ -80,6 +80,7 @@ class Member extends \yii\db\ActiveRecord
     {
         return [
             'id_member' => 'Id Member',
+            'id_category' => 'Category',
             'name' => 'Name',
             'phone' => 'Phone',
             'gender' => 'Gender',
@@ -100,6 +101,11 @@ class Member extends \yii\db\ActiveRecord
     public function getIdMemberCategory()
     {
         return $this->hasMany(MemberCategory::className(), ['id_member' => 'id_member']);
+    }
+
+    public function getMemberCat()
+    {
+        return $this->hasOne(Category::className(), ['id_category' => 'id_category']);
     }
 
     public function getMemberOrders()

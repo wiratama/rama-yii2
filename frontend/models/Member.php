@@ -57,8 +57,8 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             // [['city', 'country', 'status'], 'integer'],
-            [['status'], 'integer'],
-            [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'auth_key', 'email', 'created_at', 'updated_at'], 'required'],
+            [['status','id_category'], 'integer'],
+            [['name', 'phone', 'gender', 'dob', 'address', 'city', 'country', 'auth_key', 'email', 'created_at', 'updated_at','id_category'], 'required'],
             [['dob', 'created_at', 'updated_at'], 'safe'],
             [['address'], 'string'],
             [['name', 'password', 'password_reset_token','avatar'], 'string', 'max' => 255],
@@ -85,6 +85,7 @@ class Member extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id_member' => 'Id Member',
+            'id_category' => 'Category',
             'name' => 'Name',
             'phone' => 'Phone number',
             'gender' => 'Gender',

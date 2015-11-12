@@ -55,9 +55,15 @@ class ProductController extends Controller
 
     public function actionPromo()
     {
+        $user=\Yii::$app->user->identity;
         $claimpromo=new ClaimPromo();
-        // $query = Product::find()->where(['status' => 1]);
-        $query = Product::find()->with('productCategories.idCategory')->where('status=1 and (start_date < NOW() - INTERVAL 1 DAY) and (end_date > NOW() - INTERVAL 1 DAY)');
+        
+        $query = Product::find()->with([
+            'productCategories'=> function ($query) {
+                $query->andWhere('id_category=1');
+            }
+        ])->where('status=1 and (start_date < NOW() - INTERVAL 1 DAY) and (end_date > NOW() - INTERVAL 1 DAY)');
+        
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize'=>5]);
         
@@ -71,14 +77,15 @@ class ProductController extends Controller
         $models = $query->offset($pagestand)
             ->limit($pages->limit)
             ->all();
+
         $promos=[];
         foreach ($models as $key => $model) {
-            $promos[$key]['category']=[];
-            $i=0;
-            foreach($model['productCategories'] as $dataCategory) {
-                $promos[$key]['category'][$i]=$dataCategory['idCategory']->category;
-                $i++;
-            }
+            // $promos[$key]['category']=[];
+            // $i=0;
+            // foreach($model['productCategories'] as $dataCategory) {
+            //     $promos[$key]['category'][$i]=$dataCategory['idCategory']->category;
+            //     $i++;
+            // }
 
             $promos[$key]['id_product']=$model->id_product;
             $promos[$key]['name']=$model->name;

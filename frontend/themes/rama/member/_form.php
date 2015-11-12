@@ -131,15 +131,15 @@ use frontend\models\Category;
         </div>
     <?= $field->end() ?>
     
-    <?php $field = $form->field($model2, 'id_category'); echo $field->begin(); ?>
-        <?= Html::activeLabel($model2, 'id_category',['class'=>'col-sm-2 control-label']); ?>
+    <?php $field = $form->field($model, 'id_category'); echo $field->begin(); ?>
+        <?= Html::activeLabel($model, 'id_category',['class'=>'col-sm-2 control-label']); ?>
         <div class="col-sm-10">
             <?php
             $category=Category::find()->all();
             $listData=ArrayHelper::map($category,'id_category','category');
             ?>
-            <?= Html::activeCheckboxList($model2, 'id_category',$listData); ?>
-            <?= Html::error($model2, 'id_category',['class'=>'help-block']); ?>
+            <?= Html::activeRadioList($model, 'id_category',$listData); ?>
+            <?= Html::error($model, 'id_category',['class'=>'help-block']); ?>
         </div>
     <?= $field->end() ?>
 

@@ -73,7 +73,7 @@ class MemberController extends Controller
     public function actionSignup()
     {
         $model = new Member(['scenario' => 'signup']);
-        $model2 = new MemberCategory();
+        // $model2 = new MemberCategory();
         if ($model->load(Yii::$app->request->post())) {
             $model->file_image = UploadedFile::getInstance($model, 'file_image');
 
@@ -84,16 +84,16 @@ class MemberController extends Controller
             if ($model->save()) {
                 $model->upload($full_image_directory,$model->email);
 
-                if ($model2->load(Yii::$app->request->post())) {
-                    if (!empty(Yii::$app->request->post('MemberCategory')['id_category'])) {
-                        foreach(Yii::$app->request->post('MemberCategory')['id_category'] as $category) {
-                            $model2 = new MemberCategory();
-                            $model2->id_member=$model->id_member;
-                            $model2->id_category=$category;
-                            $model2->save();
-                        }
-                    }
-                }
+                // if ($model2->load(Yii::$app->request->post())) {
+                //     if (!empty(Yii::$app->request->post('MemberCategory')['id_category'])) {
+                //         foreach(Yii::$app->request->post('MemberCategory')['id_category'] as $category) {
+                //             $model2 = new MemberCategory();
+                //             $model2->id_member=$model->id_member;
+                //             $model2->id_category=$category;
+                //             $model2->save();
+                //         }
+                //     }
+                // }
 
                 \Yii::$app->getSession()->setFlash('success', 'Thank you for signup.');
 
@@ -107,7 +107,7 @@ class MemberController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'model2' => $model2,
+                // 'model2' => $model2,
             ]);
         }
     }
@@ -118,14 +118,14 @@ class MemberController extends Controller
         $oldpassword=$model->password;
         $oldimage=$model->avatar;
         $model->password='';
-        $model2 = new MemberCategory();
+        // $model2 = new MemberCategory();
 
-        $categories = MemberCategory::find()->where(['id_member' => Yii::$app->user->identity->id])->all();
-        $selected=[];
-        foreach($categories as $category) {
-            $selected[]=$category->id_category;
-        }
-        $model2->id_category=$selected;
+        // $categories = MemberCategory::find()->where(['id_member' => Yii::$app->user->identity->id])->all();
+        // $selected=[];
+        // foreach($categories as $category) {
+        //     $selected[]=$category->id_category;
+        // }
+        // $model2->id_category=$selected;
         
         if ($model->load(Yii::$app->request->post())) {
             $post_member=Yii::$app->request->post('Member');
@@ -151,24 +151,24 @@ class MemberController extends Controller
                     $model->upload($full_image_directory,$model->email);
                 }
 
-                if ($model2->load(Yii::$app->request->post())) {
-                        MemberCategory::deleteAll('id_member = :id', [':id' => Yii::$app->user->identity->id]);
-                        if (!empty(Yii::$app->request->post('MemberCategory')['id_category'])) {
-                            foreach(Yii::$app->request->post('MemberCategory')['id_category'] as $category) {
-                                $model2 = new MemberCategory();
-                                $model2->id_member=$model->id_member;
-                                $model2->id_category=$category;
-                                $model2->save();
-                            }
-                        }
-                    }
+                // if ($model2->load(Yii::$app->request->post())) {
+                //     MemberCategory::deleteAll('id_member = :id', [':id' => Yii::$app->user->identity->id]);
+                //     if (!empty(Yii::$app->request->post('MemberCategory')['id_category'])) {
+                //         foreach(Yii::$app->request->post('MemberCategory')['id_category'] as $category) {
+                //             $model2 = new MemberCategory();
+                //             $model2->id_member=$model->id_member;
+                //             $model2->id_category=$category;
+                //             $model2->save();
+                //         }
+                //     }
+                // }
 
                 return $this->redirect(['myaccount']);
             }
         }
         return $this->render('update', [
             'model' => $model,
-            'model2' => $model2,
+            // 'model2' => $model2,
         ]);
     }
 
