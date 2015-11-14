@@ -36,14 +36,11 @@ class PasswordResetRequestForm extends Model
 			}
 
 			if ($member->save(false)) { // $member->save(false)=>skip all validation rules
-				return \Yii::$app->phpmailer->compose('passwordResetToken-html', 
-						[
-							'user' => $member,
-							'htmlLayout' => 'layouts/html'
-						])
-						->setTo($this->email)
-						->setSubject('Password reset for ' . \Yii::$app->name)
-						->send();
+				return \Yii::$app->mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $member])
+					->setFrom([\Yii::$app->params['noreplyEmail'] => \Yii::$app->name])
+					->setTo($this->email)
+					->setSubject('Password reset for ' . \Yii::$app->name)
+					->send();
 			}
 		}
 
