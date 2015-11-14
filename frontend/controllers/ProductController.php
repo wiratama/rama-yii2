@@ -132,13 +132,13 @@ class ProductController extends Controller
 				$point->save();
 
 				Yii::$app->mailer->compose(['html' => '@app/themes/rama/mail/couponCode-html', 'text' => '@app/themes/rama/mail/couponCode-text'], ['user' => $member,'coupon_code'=>$randCode,'doc'=>$post['doc']])
-				->setFrom([\Yii::$app->params['infoEmail'] => \Yii::$app->name])
+				->setFrom([\Yii::$app->params['noreplyEmail'] => \Yii::$app->name])
 				->setTo($member->email)
 				->setSubject('Coupon code for ' . \Yii::$app->name)
 				->send();
 
 				Yii::$app->mailer->compose(['html' => '@app/themes/rama/mail/claimedCode-html', 'text' => '@app/themes/rama/mail/claimedCode-text'], ['coupon_code'=>$randCode,'doc'=>$post['doc'],'customer_mail'=>$member->email])
-				->setFrom([\Yii::$app->params['infoEmail'] => \Yii::$app->name])
+				->setFrom([\Yii::$app->params['noreplyEmail'] => \Yii::$app->name])
 				->setTo(\Yii::$app->params['itEmail'])
 				->setSubject('New order claimed ' . \Yii::$app->name)
 				->send();
