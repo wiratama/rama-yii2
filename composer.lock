@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "05e9e40d512a5c34b9964e0991420dfe",
-    "content-hash": "b5ce6556a209ad43198f287a9daffe92",
+    "hash": "6e5cd3415559156c2f4d3db5b437ecef",
+    "content-hash": "313ee27e89b55fcf93bb7ab1d0abc15b",
     "packages": [
         {
             "name": "2amigos/yii2-date-picker-widget",
@@ -506,16 +506,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.2.7",
+            "version": "v4.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "0468bbba9c28c1250aca83eba9b33e32ec135f78"
+                "reference": "6ba4295298ee3abe26171b4e2078c27a2f3b35b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/0468bbba9c28c1250aca83eba9b33e32ec135f78",
-                "reference": "0468bbba9c28c1250aca83eba9b33e32ec135f78",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/6ba4295298ee3abe26171b4e2078c27a2f3b35b0",
+                "reference": "6ba4295298ee3abe26171b4e2078c27a2f3b35b0",
                 "shasum": ""
             },
             "type": "library",
@@ -550,7 +550,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2015-09-13 17:39:44"
+            "time": "2015-11-18 17:56:04"
         },
         {
             "name": "kartik-v/mpdf",
@@ -926,12 +926,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-password.git",
-                "reference": "899b57d391b0b4330eba0fdb8b22369ebfdfc29b"
+                "reference": "6b84710023f07380812f3f23d6275347caa99bd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/899b57d391b0b4330eba0fdb8b22369ebfdfc29b",
-                "reference": "899b57d391b0b4330eba0fdb8b22369ebfdfc29b",
+                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/6b84710023f07380812f3f23d6275347caa99bd7",
+                "reference": "6b84710023f07380812f3f23d6275347caa99bd7",
                 "shasum": ""
             },
             "require": {
@@ -969,7 +969,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-11-03 12:13:29"
+            "time": "2015-11-15 16:16:56"
         },
         {
             "name": "kartik-v/yii2-widget-fileinput",
@@ -1020,59 +1020,6 @@
                 "yii2"
             ],
             "time": "2015-08-17 13:03:50"
-        },
-        {
-            "name": "phpmailer/phpmailer",
-            "version": "v5.2.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "d3802c597bff8f6c2ccfa3eab2a511aa01b8d68f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/d3802c597bff8f6c2ccfa3eab2a511aa01b8d68f",
-                "reference": "d3802c597bff8f6c2ccfa3eab2a511aa01b8d68f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.0.0"
-            },
-            "require-dev": {
-                "phpdocumentor/phpdocumentor": "*",
-                "phpunit/phpunit": "4.0.*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "class.phpmailer.php",
-                    "class.pop3.php",
-                    "class.smtp.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1"
-            ],
-            "authors": [
-                {
-                    "name": "Jim Jagielski",
-                    "email": "jimjag@gmail.com"
-                },
-                {
-                    "name": "Marcus Bointon",
-                    "email": "phpmailer@synchromedia.co.uk"
-                },
-                {
-                    "name": "Andy Prevost",
-                    "email": "codeworxtech@users.sourceforge.net"
-                },
-                {
-                    "name": "Brent R. Matzelle"
-                }
-            ],
-            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2014-05-14 07:04:18"
         },
         {
             "name": "phpoffice/phpexcel",
@@ -1466,50 +1413,6 @@
                 "yii2"
             ],
             "time": "2015-05-10 22:12:32"
-        },
-        {
-            "name": "zyx/zyx-phpmailer",
-            "version": "0.9.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SDKiller/zyx-phpmailer.git",
-                "reference": "2032706c35a345f875c4acf310600098a37ca469"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SDKiller/zyx-phpmailer/zipball/2032706c35a345f875c4acf310600098a37ca469",
-                "reference": "2032706c35a345f875c4acf310600098a37ca469",
-                "shasum": ""
-            },
-            "require": {
-                "phpmailer/phpmailer": "v5.2.8",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "zyx\\phpmailer\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Serge Postrash aka SDKiller",
-                    "email": "jexy.ru@gmail.com"
-                }
-            ],
-            "description": "PHPMailer integration for Yii 2 framework",
-            "keywords": [
-                "email",
-                "mail",
-                "mailer",
-                "phpmailer",
-                "yii2"
-            ],
-            "time": "2014-05-14 20:30:24"
         }
     ],
     "packages-dev": [
@@ -1825,8 +1728,7 @@
         "kartik-v/yii2-password": 20,
         "kartik-v/yii2-datecontrol": 20,
         "kartik-v/yii2-widget-fileinput": 20,
-        "kartik-v/yii2-grid": 20,
-        "zyx/zyx-phpmailer": 0
+        "kartik-v/yii2-grid": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

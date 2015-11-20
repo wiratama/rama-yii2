@@ -26,8 +26,7 @@
         "yiisoft/yii2-imagine": "^2.0",
         "kartik-v/yii2-export": "*",
         "kartik-v/yii2-grid": "@dev",
-        "kartik-v/yii2-mpdf": "*",
-        "zyx/zyx-phpmailer": "@stable"
+        "kartik-v/yii2-mpdf": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
