@@ -62,8 +62,15 @@ class MemberController extends Controller
     {
         $member=Member::findIdentity(Yii::$app->user->identity->id);
         $member->password="Your choosen password!";
-        Image::thumbnail(Yii::$app->basePath.'/..'.$member->avatar, 350, 350)->save(Yii::$app->basePath.'/../resize/'.$member->avatar, ['quality' => 100]);
-        $avatar=Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl().'/resize/'.$member->avatar;
+        
+        if (!empty($member->avatar) and $member->avatar!=".") {
+            Image::thumbnail(Yii::$app->basePath.'/..'.$member->avatar, 350, 350)->save(Yii::$app->basePath.'/../resize/'.$member->avatar, ['quality' => 100]);
+            $avatar=Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl().'/resize/'.$member->avatar;
+        } else {
+            Image::thumbnail(Yii::$app->basePath.'/../uploads/avatar/avatar-empty.jpg', 350, 350)->save(Yii::$app->basePath.'/../resize/avatar/avatar-empty.jpg', ['quality' => 100]);
+            $avatar=Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl().'/resize/avatar/avatar-empty.jpg';
+        }
+
         return $this->render('view', [
             'model' => $member,
             'avatar'=>$avatar,
@@ -73,7 +80,6 @@ class MemberController extends Controller
     public function actionSignup()
     {
         $model = new Member(['scenario' => 'signup']);
-        // $model2 = new MemberCategory();
         if ($model->load(Yii::$app->request->post())) {
             $model->file_image = UploadedFile::getInstance($model, 'file_image');
 
@@ -83,17 +89,6 @@ class MemberController extends Controller
 
             if ($model->save()) {
                 $model->upload($full_image_directory,$model->email);
-
-                // if ($model2->load(Yii::$app->request->post())) {
-                //     if (!empty(Yii::$app->request->post('MemberCategory')['id_category'])) {
-                //         foreach(Yii::$app->request->post('MemberCategory')['id_category'] as $category) {
-                //             $model2 = new MemberCategory();
-                //             $model2->id_member=$model->id_member;
-                //             $model2->id_category=$category;
-                //             $model2->save();
-                //         }
-                //     }
-                // }
 
                 \Yii::$app->getSession()->setFlash('success', 'Thank you for signup.');
 
@@ -107,7 +102,6 @@ class MemberController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                // 'model2' => $model2,
             ]);
         }
     }
@@ -118,14 +112,6 @@ class MemberController extends Controller
         $oldpassword=$model->password;
         $oldimage=$model->avatar;
         $model->password='';
-        // $model2 = new MemberCategory();
-
-        // $categories = MemberCategory::find()->where(['id_member' => Yii::$app->user->identity->id])->all();
-        // $selected=[];
-        // foreach($categories as $category) {
-        //     $selected[]=$category->id_category;
-        // }
-        // $model2->id_category=$selected;
         
         if ($model->load(Yii::$app->request->post())) {
             $post_member=Yii::$app->request->post('Member');
@@ -151,17 +137,6 @@ class MemberController extends Controller
                     $model->upload($full_image_directory,$model->email);
                 }
 
-                // if ($model2->load(Yii::$app->request->post())) {
-                //     MemberCategory::deleteAll('id_member = :id', [':id' => Yii::$app->user->identity->id]);
-                //     if (!empty(Yii::$app->request->post('MemberCategory')['id_category'])) {
-                //         foreach(Yii::$app->request->post('MemberCategory')['id_category'] as $category) {
-                //             $model2 = new MemberCategory();
-                //             $model2->id_member=$model->id_member;
-                //             $model2->id_category=$category;
-                //             $model2->save();
-                //         }
-                //     }
-                // }
 
                 return $this->redirect(['myaccount']);
             }

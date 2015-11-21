@@ -13,6 +13,7 @@ use backend\models\Category;
 ?>
 
 <div class="product-form">
+<div class="col-md-6">
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -57,4 +58,5 @@ use backend\models\Category;
 
     <?php ActiveForm::end(); ?>
 
+</div>
 </div>

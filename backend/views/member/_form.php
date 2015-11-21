@@ -16,6 +16,7 @@ use backend\models\Category;
 ?>
 
 <div class="member-form">
+<div class="col-md-6">
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
@@ -66,6 +67,9 @@ use backend\models\Category;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+</div>
+
+
 <?php
 $null='';
 use yii\web\View;

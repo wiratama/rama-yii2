@@ -68,8 +68,8 @@ class MemberSearch extends Member
             // 'updated_at' => $this->updated_at,
         ]);
 
-        // $query->andFilterWhere(['like', 'name', $this->name])
-        $query->andFilterWhere(['like', 'phone', $this->phone])
+        $query->andFilterWhere(['like', 'member.name', $this->name])
+            ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'gender', $this->gender])
             // ->andFilterWhere(['like', 'address', $this->address])
             // ->andFilterWhere(['like', 'password', $this->password])

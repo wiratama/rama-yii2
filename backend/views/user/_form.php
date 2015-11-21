@@ -10,6 +10,7 @@ use kartik\password\PasswordInput;
 ?>
 
 <div class="user-form">
+<div class="col-md-6">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -29,4 +30,5 @@ use kartik\password\PasswordInput;
 
     <?php ActiveForm::end(); ?>
 
+</div>
 </div>

@@ -11,6 +11,7 @@ use backend\models\AuthItem;
 ?>
 
 <div class="auth-item-child-form">
+<div class="col-md-6">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -27,4 +28,5 @@ use backend\models\AuthItem;
 
     <?php ActiveForm::end(); ?>
 
+</div>
 </div>

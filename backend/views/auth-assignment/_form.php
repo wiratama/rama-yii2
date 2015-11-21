@@ -12,6 +12,7 @@ use backend\models\User;
 ?>
 
 <div class="auth-assignment-form">
+<div class="col-md-6">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -33,4 +34,5 @@ use backend\models\User;
 
     <?php ActiveForm::end(); ?>
 
+</div>
 </div>

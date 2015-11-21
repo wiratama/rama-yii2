@@ -9,6 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="member-order-product-form">
+<div class="col-md-6">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -24,4 +25,5 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
+</div>
 </div>
