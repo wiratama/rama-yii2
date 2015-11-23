@@ -115,10 +115,19 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 </div>
 <?php
+$formname='"ClaimPromo[doc]"';
 $this->registerJs("
 function claimPromo(id,page) {
 	$('#promo-modal'+id).modal('show');
-	console.log(id);
 };
+
+$(document).ready(function () {
+    var date = new Date();
+    date.setDate(date.getDate());
+    console.log(date);
+    $('input[name=".$formname."]').parent().datepicker({ 
+        startDate: date
+    });
+});
 ", View::POS_END);
 ?>
