@@ -81,6 +81,9 @@ class MemberController extends Controller
     {
         $model = new Member(['scenario' => 'signup']);
         if ($model->load(Yii::$app->request->post())) {
+            $post_member=Yii::$app->request->post('Member');
+            $dob=$post_member['dob'];
+            $model->dob=$dob[0]."-".$dob[1]."-".$dob[2];
             $model->file_image = UploadedFile::getInstance($model, 'file_image');
 
             $base_image_directory="/uploads/avatars/";
@@ -112,9 +115,13 @@ class MemberController extends Controller
         $oldpassword=$model->password;
         $oldimage=$model->avatar;
         $model->password='';
+        $dob=explode('-', $model->dob);
+        $model->dob=$dob;
         
         if ($model->load(Yii::$app->request->post())) {
             $post_member=Yii::$app->request->post('Member');
+            $dob=$post_member['dob'];
+            $model->dob=$dob[0]."-".$dob[1]."-".$dob[2];
             $base_image_directory="/uploads/avatars/";
             $full_image_directory=Yii::$app->getBasePath()."/..".$base_image_directory;
             
@@ -137,13 +144,12 @@ class MemberController extends Controller
                     $model->upload($full_image_directory,$model->email);
                 }
 
-
                 return $this->redirect(['myaccount']);
             }
         }
+
         return $this->render('update', [
             'model' => $model,
-            // 'model2' => $model2,
         ]);
     }
 
