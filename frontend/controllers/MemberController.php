@@ -63,12 +63,12 @@ class MemberController extends Controller
         $member=Member::findIdentity(Yii::$app->user->identity->id);
         $member->password="Your choosen password!";
         
-        if (!empty($member->avatar) and $member->avatar!=".") {
+        if (!empty($member->avatar) and $member->avatar!="." and file_exists(Yii::$app->getBasePath()."/..".$member->avatar)) {
             Image::thumbnail(Yii::$app->basePath.'/..'.$member->avatar, 350, 350)->save(Yii::$app->basePath.'/../resize/'.$member->avatar, ['quality' => 100]);
             $avatar=Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl().'/resize/'.$member->avatar;
         } else {
-            Image::thumbnail(Yii::$app->basePath.'/../uploads/avatar/avatar-empty.jpg', 350, 350)->save(Yii::$app->basePath.'/../resize/avatar/avatar-empty.jpg', ['quality' => 100]);
-            $avatar=Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl().'/resize/avatar/avatar-empty.jpg';
+            Image::thumbnail(Yii::$app->basePath.'/../uploads/avatars/avatar-empty.jpg', 350, 350)->save(Yii::$app->basePath.'/../resize/avatars/avatar-empty.jpg', ['quality' => 100]);
+            $avatar=Yii::$app->request->hostInfo.Yii::$app->getUrlManager()->getBaseUrl().'/resize/avatars/avatar-empty.jpg';
         }
 
         return $this->render('view', [

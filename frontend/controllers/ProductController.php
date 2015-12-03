@@ -109,7 +109,7 @@ class ProductController extends Controller
 			$active=$all_active-$all_used;
 			$member=Member::findIdentity(Yii::$app->user->identity->id);
 			
-			if ($claim!== null and (int)$active > (int)$claim->point) {
+			if ($claim!== null and (int)$active >= (int)$claim->point) {
 				$randCode=implode("",$this->getNumbers(1,99,5,1));
 
 				$order=new MemberOrder();
